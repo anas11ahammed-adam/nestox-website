@@ -1,433 +1,329 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Nestox Admin</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-:root{
-  --navy:#0d1b3e;--navy2:#162347;--navy3:#1e2f5a;
-  --gold:#b8955a;--gold2:#d4b07a;
-  --cream:#f5f2ec;--white:#fff;
-  --ink:#111;--muted:#6b6b6b;
-  --border:#e8e4dc;--success:#2e7d52;--danger:#c0392b;
-  --sidebar:242px;
-}
+:root{--navy:#0d1b3e;--gold:#b8955a;--gold2:#d4b07a;--cream:#f5f2ec;--white:#fff;--ink:#111;--muted:#6b6b6b;--border:#e8e4dc;--success:#2e7d52;--danger:#c0392b;--sw:242px;}
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
 html,body{height:100%;font-family:'DM Sans',sans-serif;font-size:15px;color:var(--ink);background:var(--cream);}
-
-/* LOGIN */
-#loginScreen{display:flex;align-items:center;justify-content:center;min-height:100vh;background:var(--navy);position:fixed;inset:0;z-index:999;transition:opacity .4s;}
-#loginScreen.hide{opacity:0;pointer-events:none;}
-.login-box{background:var(--white);padding:56px 52px;width:100%;max-width:440px;box-shadow:0 40px 100px rgba(0,0,0,.35);}
-.login-logo{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:500;color:var(--navy);margin-bottom:4px;}
-.login-logo span{color:var(--gold);}
-.login-sub{font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:40px;}
-.login-field{display:flex;flex-direction:column;gap:7px;margin-bottom:18px;}
-.login-label{font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:500;}
-.login-input{border:1.5px solid var(--border);padding:13px 15px;font-family:'DM Sans',sans-serif;font-size:.9rem;outline:none;transition:border-color .3s;color:var(--ink);}
-.login-input:focus{border-color:var(--gold);}
-.login-btn{width:100%;background:var(--navy);color:var(--white);border:none;padding:15px;font-family:'DM Sans',sans-serif;font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;cursor:pointer;margin-top:10px;transition:background .3s;}
-.login-btn:hover{background:var(--gold);}
-.login-hint{font-size:.74rem;color:var(--muted);margin-top:16px;text-align:center;background:var(--cream);padding:10px;line-height:1.7;}
-.login-err{color:var(--danger);font-size:.8rem;margin-top:10px;display:none;}
-
-/* LAYOUT */
-#adminApp{display:none;height:100vh;overflow:hidden;}
-#adminApp.show{display:flex;}
-.sidebar{width:var(--sidebar);background:var(--navy);display:flex;flex-direction:column;flex-shrink:0;overflow-y:auto;}
-.sb-logo{padding:26px 22px 20px;border-bottom:1px solid rgba(255,255,255,.07);}
-.sb-logo-text{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:500;color:var(--white);letter-spacing:.04em;}
-.sb-logo-text span{color:var(--gold);}
-.sb-sub{font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.28);margin-top:3px;}
-.sb-section{padding:16px 0 6px;border-bottom:1px solid rgba(255,255,255,.05);}
-.sb-section-label{font-size:.59rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.22);padding:0 18px 8px;}
-.sb-item{display:flex;align-items:center;gap:10px;padding:10px 18px;cursor:pointer;transition:background .2s,color .2s;color:rgba(255,255,255,.48);font-size:.8rem;border-left:3px solid transparent;text-decoration:none;user-select:none;}
-.sb-item:hover{background:rgba(255,255,255,.06);color:rgba(255,255,255,.88);}
-.sb-item.active{background:rgba(184,149,90,.13);color:var(--gold2);border-left-color:var(--gold);}
-.sb-icon{font-size:.95rem;width:17px;text-align:center;flex-shrink:0;}
-.sb-bottom{margin-top:auto;padding:18px;border-top:1px solid rgba(255,255,255,.07);}
-.sb-preview{display:flex;align-items:center;gap:9px;padding:10px 14px;background:rgba(255,255,255,.06);cursor:pointer;transition:background .2s;color:rgba(255,255,255,.58);font-size:.76rem;text-decoration:none;margin-bottom:8px;}
-.sb-preview:hover{background:rgba(184,149,90,.15);color:var(--gold2);}
-.sb-logout{display:flex;align-items:center;gap:9px;padding:10px 14px;background:rgba(192,57,43,.1);cursor:pointer;color:rgba(255,100,80,.65);font-size:.76rem;border:none;width:100%;font-family:'DM Sans',sans-serif;transition:background .2s;}
-.sb-logout:hover{background:rgba(192,57,43,.24);color:#ff7b6b;}
-
-/* MAIN */
+#ls{display:flex;align-items:center;justify-content:center;min-height:100vh;background:var(--navy);position:fixed;inset:0;z-index:999;transition:opacity .4s;}
+#ls.hide{opacity:0;pointer-events:none;}
+.lbox{background:var(--white);padding:52px;width:100%;max-width:420px;box-shadow:0 40px 100px rgba(0,0,0,.35);}
+.llogo{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:500;color:var(--navy);}.llogo span{color:var(--gold);}
+.lsub{font-size:.76rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:36px;margin-top:4px;}
+.lfld{display:flex;flex-direction:column;gap:6px;margin-bottom:16px;}
+.lfld label{font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:500;}
+.lfld input{border:1.5px solid var(--border);padding:12px 14px;font-family:'DM Sans',sans-serif;font-size:.88rem;color:var(--ink);outline:none;transition:border-color .3s;}
+.lfld input:focus{border-color:var(--gold);}
+.lbtn{width:100%;background:var(--navy);color:var(--white);border:none;padding:14px;font-family:'DM Sans',sans-serif;font-size:.76rem;letter-spacing:.14em;text-transform:uppercase;cursor:pointer;margin-top:8px;transition:background .3s;}
+.lbtn:hover{background:var(--gold);}
+.lhint{font-size:.72rem;color:var(--muted);margin-top:14px;text-align:center;background:var(--cream);padding:10px;line-height:1.7;}
+.lerr{color:var(--danger);font-size:.78rem;margin-top:8px;display:none;}
+#app{display:none;height:100vh;overflow:hidden;}
+#app.show{display:flex;}
+.sb{width:var(--sw);background:var(--navy);display:flex;flex-direction:column;flex-shrink:0;overflow-y:auto;}
+.sb-logo{padding:24px 20px 18px;border-bottom:1px solid rgba(255,255,255,.07);}
+.sb-logo-t{font-family:'Cormorant Garamond',serif;font-size:1.45rem;font-weight:500;color:var(--white);letter-spacing:.04em;}
+.sb-logo-t span{color:var(--gold);}
+.sb-sub{font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.26);margin-top:3px;}
+.sb-sec{padding:14px 0 5px;border-bottom:1px solid rgba(255,255,255,.05);}
+.sb-sec-lbl{font-size:.58rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.2);padding:0 16px 7px;}
+.sbi{display:flex;align-items:center;gap:9px;padding:9px 16px;cursor:pointer;transition:background .2s;color:rgba(255,255,255,.45);font-size:.78rem;border-left:3px solid transparent;user-select:none;}
+.sbi:hover{background:rgba(255,255,255,.06);color:rgba(255,255,255,.85);}
+.sbi.active{background:rgba(184,149,90,.13);color:var(--gold2);border-left-color:var(--gold);}
+.sbi-ico{font-size:.9rem;width:16px;text-align:center;flex-shrink:0;}
+.sb-bot{margin-top:auto;padding:16px;border-top:1px solid rgba(255,255,255,.07);}
+.sb-prev{display:flex;align-items:center;gap:8px;padding:9px 12px;background:rgba(255,255,255,.06);cursor:pointer;color:rgba(255,255,255,.55);font-size:.74rem;text-decoration:none;margin-bottom:7px;transition:background .2s;}
+.sb-prev:hover{background:rgba(184,149,90,.15);color:var(--gold2);}
+.sb-lgout{display:flex;align-items:center;gap:8px;padding:9px 12px;background:rgba(192,57,43,.1);cursor:pointer;color:rgba(255,100,80,.62);font-size:.74rem;border:none;width:100%;font-family:'DM Sans',sans-serif;transition:background .2s;}
+.sb-lgout:hover{background:rgba(192,57,43,.22);color:#ff7b6b;}
 .main{flex:1;overflow-y:auto;display:flex;flex-direction:column;min-width:0;}
-.topbar{background:var(--white);border-bottom:1px solid var(--border);padding:16px 32px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;position:sticky;top:0;z-index:100;}
-.topbar-title{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:400;color:var(--navy);}
-.topbar-actions{display:flex;gap:10px;align-items:center;}
-.tb-badge{font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;background:rgba(184,149,90,.14);color:var(--gold);padding:5px 12px;}
-.content{padding:32px;flex:1;}
-
-/* PANELS */
-.panel{display:none;}
-.panel.active{display:block;animation:fadeIn .28s ease;}
-@keyframes fadeIn{from{opacity:0;transform:translateY(7px);}to{opacity:1;transform:translateY(0);}}
-
-/* DASHBOARD */
-.dash-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-bottom:28px;}
-.dash-card{background:var(--white);padding:22px 26px;border:1px solid var(--border);border-left:3px solid var(--gold);}
-.dc-label{font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:7px;}
-.dc-value{font-family:'Cormorant Garamond',serif;font-size:2.2rem;font-weight:400;color:var(--navy);line-height:1;}
-.dc-sub{font-size:.7rem;color:var(--muted);margin-top:4px;}
-.qa-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:28px;}
-.qa-btn{background:var(--white);border:1px solid var(--border);padding:18px 20px;cursor:pointer;text-align:left;transition:all .2s;font-family:'DM Sans',sans-serif;}
-.qa-btn:hover{border-color:var(--gold);box-shadow:0 4px 20px rgba(184,149,90,.1);}
-.qa-icon{font-size:1.3rem;margin-bottom:8px;}
-.qa-title{font-size:.82rem;font-weight:500;color:var(--navy);margin-bottom:3px;}
-.qa-desc{font-size:.72rem;color:var(--muted);}
-
-/* SECTION HEADER */
-.sec-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:22px;}
-.sec-hdr h2{font-family:'Cormorant Garamond',serif;font-size:1.55rem;font-weight:400;color:var(--navy);}
-.sec-hdr p{font-size:.76rem;color:var(--muted);margin-top:2px;}
-
-/* FORM */
-.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
-.form-full{grid-column:1/-1;}
-.fld{display:flex;flex-direction:column;gap:6px;margin-bottom:14px;}
-.fld label{font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:500;}
-.fld input,.fld textarea,.fld select{border:1.5px solid var(--border);padding:10px 13px;font-family:'DM Sans',sans-serif;font-size:.87rem;color:var(--ink);outline:none;transition:border-color .3s;background:var(--white);-webkit-appearance:none;}
+.tb{background:var(--white);border-bottom:1px solid var(--border);padding:15px 30px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;position:sticky;top:0;z-index:100;}
+.tb-title{font-family:'Cormorant Garamond',serif;font-size:1.45rem;font-weight:400;color:var(--navy);}
+.tb-acts{display:flex;gap:9px;align-items:center;}
+.tb-badge{font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;background:rgba(184,149,90,.14);color:var(--gold);padding:4px 11px;}
+.ct{padding:28px;flex:1;}
+.panel{display:none;}.panel.active{display:block;animation:fi .28s ease;}
+@keyframes fi{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
+.dgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px;}
+.dc{background:var(--white);padding:20px 24px;border:1px solid var(--border);border-left:3px solid var(--gold);}
+.dc-lbl{font-size:.64rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:6px;}
+.dc-val{font-family:'Cormorant Garamond',serif;font-size:2.1rem;font-weight:400;color:var(--navy);line-height:1;}
+.dc-sub{font-size:.68rem;color:var(--muted);margin-top:4px;}
+.qa{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:24px;}
+.qa-btn{background:var(--white);border:1px solid var(--border);padding:16px 18px;cursor:pointer;text-align:left;transition:all .2s;font-family:'DM Sans',sans-serif;}
+.qa-btn:hover{border-color:var(--gold);box-shadow:0 4px 18px rgba(184,149,90,.1);}
+.qa-ico{font-size:1.2rem;margin-bottom:7px;}.qa-t{font-size:.8rem;font-weight:500;color:var(--navy);margin-bottom:2px;}.qa-d{font-size:.7rem;color:var(--muted);}
+.sh{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;}
+.sh h2{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:400;color:var(--navy);}
+.sh p{font-size:.74rem;color:var(--muted);margin-top:2px;}
+.fg{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+.ff{grid-column:1/-1;}
+.fld{display:flex;flex-direction:column;gap:5px;margin-bottom:12px;}
+.fld label{font-size:.64rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:500;}
+.fld input,.fld textarea,.fld select{border:1.5px solid var(--border);padding:9px 12px;font-family:'DM Sans',sans-serif;font-size:.85rem;color:var(--ink);outline:none;transition:border-color .3s;background:var(--white);-webkit-appearance:none;width:100%;}
 .fld input:focus,.fld textarea:focus,.fld select:focus{border-color:var(--gold);}
-.fld textarea{resize:vertical;min-height:90px;}
-.fld-hint{font-size:.68rem;color:var(--muted);margin-top:3px;}
-.img-preview{width:100%;height:160px;background:var(--cream);margin-top:8px;border:1px solid var(--border);background-size:cover;background-position:center;display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:.78rem;}
-
-/* BUTTONS */
-.btn{font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;padding:10px 22px;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;display:inline-flex;align-items:center;gap:7px;}
-.btn-navy{background:var(--navy);color:var(--white);}
-.btn-navy:hover{background:var(--gold);}
-.btn-gold{background:var(--gold);color:var(--white);}
-.btn-gold:hover{background:var(--navy);}
-.btn-outline{background:transparent;color:var(--navy);border:1.5px solid var(--border);}
-.btn-outline:hover{border-color:var(--navy);}
-.btn-danger{background:var(--danger);color:var(--white);font-size:.68rem;padding:7px 14px;}
-.btn-danger:hover{background:#a93226;}
-.btn-sm{padding:7px 15px;font-size:.68rem;}
-.save-bar{position:sticky;bottom:0;background:var(--white);border-top:1px solid var(--border);padding:14px 32px;display:flex;align-items:center;gap:14px;box-shadow:0 -4px 20px rgba(0,0,0,.05);z-index:50;margin:-32px -32px 0;}
-.save-msg{font-size:.76rem;color:var(--success);display:none;align-items:center;gap:6px;}
-.save-msg.show{display:flex;}
-
-/* CARDS */
-.card-list{display:flex;flex-direction:column;gap:12px;}
-.card-item{background:var(--white);border:1px solid var(--border);padding:18px 22px;display:flex;align-items:flex-start;gap:16px;transition:box-shadow .2s;}
-.card-item:hover{box-shadow:0 4px 18px rgba(0,0,0,.06);}
-.card-item-img{width:76px;height:56px;flex-shrink:0;background:var(--cream);background-size:cover;background-position:center;border:1px solid var(--border);}
-.card-item-info{flex:1;min-width:0;}
-.card-item-title{font-weight:500;font-size:.88rem;color:var(--navy);margin-bottom:3px;}
-.card-item-meta{font-size:.72rem;color:var(--muted);}
-.card-item-actions{display:flex;gap:7px;flex-shrink:0;align-items:center;}
-
-/* TABLE */
-.tbl-wrap{overflow-x:auto;}
+.fld textarea{resize:vertical;min-height:80px;}
+.iprev{width:100%;height:150px;background:var(--cream);margin-top:7px;border:1px solid var(--border);background-size:cover;background-position:center;display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:.76rem;}
+.btn{font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;padding:9px 20px;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;display:inline-flex;align-items:center;gap:6px;}
+.bn{background:var(--navy);color:var(--white);}.bn:hover{background:var(--gold);}
+.bo{background:transparent;color:var(--navy);border:1.5px solid var(--border);}.bo:hover{border-color:var(--navy);}
+.bd{background:var(--danger);color:var(--white);font-size:.66rem;padding:6px 13px;}.bd:hover{background:#a93226;}
+.bsm{padding:6px 14px;font-size:.66rem;}
+.savebar{position:sticky;bottom:0;background:var(--white);border-top:1px solid var(--border);padding:13px 28px;display:flex;align-items:center;gap:12px;box-shadow:0 -4px 18px rgba(0,0,0,.05);z-index:50;margin:-28px -28px 0;}
+.smsg{font-size:.74rem;color:var(--success);display:none;align-items:center;gap:5px;}
+.smsg.show{display:flex;}
+.cl{display:flex;flex-direction:column;gap:11px;}
+.ci{background:var(--white);border:1px solid var(--border);padding:16px 20px;display:flex;align-items:flex-start;gap:14px;transition:box-shadow .2s;}
+.ci:hover{box-shadow:0 4px 16px rgba(0,0,0,.06);}
+.ci-img{width:72px;height:54px;flex-shrink:0;background:var(--cream);background-size:cover;background-position:center;border:1px solid var(--border);}
+.ci-info{flex:1;min-width:0;}
+.ci-title{font-weight:500;font-size:.86rem;color:var(--navy);margin-bottom:3px;}
+.ci-meta{font-size:.7rem;color:var(--muted);}
+.ci-acts{display:flex;gap:6px;flex-shrink:0;align-items:center;}
+.tblw{overflow-x:auto;}
 table{width:100%;border-collapse:collapse;background:var(--white);border:1px solid var(--border);}
-thead{background:var(--navy);}
-th{padding:11px 14px;font-size:.66rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.68);text-align:left;font-weight:500;}
-td{padding:12px 14px;font-size:.8rem;border-bottom:1px solid var(--border);vertical-align:middle;}
-tr:last-child td{border-bottom:none;}
-tr:hover td{background:rgba(245,242,236,.5);}
-.badge{font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;padding:3px 9px;display:inline-block;}
-.badge-green{background:rgba(46,125,82,.1);color:#2e7d52;}
-.badge-blue{background:rgba(13,27,62,.1);color:var(--navy);}
-.badge-gold{background:rgba(184,149,90,.12);color:var(--gold);}
-
-/* TOGGLES */
-.toggle-group{display:flex;flex-direction:column;gap:10px;}
-.toggle-row{display:flex;align-items:center;justify-content:space-between;background:var(--white);border:1px solid var(--border);padding:14px 18px;}
-.toggle-title{font-size:.84rem;font-weight:500;color:var(--navy);}
-.toggle-desc{font-size:.72rem;color:var(--muted);margin-top:2px;}
-.toggle{position:relative;width:42px;height:23px;flex-shrink:0;}
-.toggle input{opacity:0;width:0;height:0;}
-.toggle-slider{position:absolute;inset:0;background:#d0d0d0;border-radius:23px;cursor:pointer;transition:background .3s;}
-.toggle-slider::before{content:'';position:absolute;width:17px;height:17px;left:3px;top:3px;background:white;border-radius:50%;transition:transform .3s;}
-.toggle input:checked+.toggle-slider{background:var(--navy);}
-.toggle input:checked+.toggle-slider::before{transform:translateX(19px);}
-
-/* MODAL */
-.modal-overlay{display:none;position:fixed;inset:0;background:rgba(13,27,62,.45);backdrop-filter:blur(4px);z-index:500;align-items:center;justify-content:center;padding:20px;}
-.modal-overlay.open{display:flex;}
-.modal-box{background:var(--white);width:100%;max-width:680px;max-height:90vh;overflow-y:auto;padding:36px;}
-.modal-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;padding-bottom:16px;border-bottom:1px solid var(--border);}
-.modal-hdr h3{font-family:'Cormorant Garamond',serif;font-size:1.5rem;color:var(--navy);}
-.modal-close{background:none;border:none;font-size:1.2rem;cursor:pointer;color:var(--muted);transition:color .2s;}
-.modal-close:hover{color:var(--danger);}
-
-/* NOTIF */
-.notif{position:fixed;bottom:24px;right:24px;background:var(--navy);color:var(--white);padding:13px 20px;font-size:.8rem;z-index:9999;transform:translateY(80px);opacity:0;transition:all .35s;display:flex;align-items:center;gap:9px;max-width:320px;}
-.notif.show{transform:translateY(0);opacity:1;}
-.notif.success{background:var(--success);}
-.notif.error{background:var(--danger);}
-
-@media(max-width:900px){
-  .sidebar{width:190px;}
-  .dash-grid{grid-template-columns:1fr 1fr;}
-  .qa-grid{grid-template-columns:1fr 1fr;}
-  .form-grid{grid-template-columns:1fr;}
-}
+thead{background:var(--navy);}th{padding:10px 13px;font-size:.64rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.65);text-align:left;font-weight:500;}
+td{padding:11px 13px;font-size:.78rem;border-bottom:1px solid var(--border);vertical-align:middle;}
+tr:last-child td{border-bottom:none;}tr:hover td{background:rgba(245,242,236,.5);}
+.bdg{font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;padding:3px 8px;display:inline-block;}
+.bdg-g{background:rgba(46,125,82,.1);color:#2e7d52;}.bdg-b{background:rgba(13,27,62,.1);color:var(--navy);}
+.tg-grp{display:flex;flex-direction:column;gap:9px;}
+.tg-row{display:flex;align-items:center;justify-content:space-between;background:var(--white);border:1px solid var(--border);padding:13px 16px;}
+.tg-t{font-size:.82rem;font-weight:500;color:var(--navy);}.tg-d{font-size:.7rem;color:var(--muted);margin-top:2px;}
+.tog{position:relative;width:40px;height:22px;flex-shrink:0;}
+.tog input{opacity:0;width:0;height:0;}
+.tog-sl{position:absolute;inset:0;background:#d0d0d0;border-radius:22px;cursor:pointer;transition:background .3s;}
+.tog-sl::before{content:'';position:absolute;width:16px;height:16px;left:3px;top:3px;background:#fff;border-radius:50%;transition:transform .3s;}
+.tog input:checked+.tog-sl{background:var(--navy);}
+.tog input:checked+.tog-sl::before{transform:translateX(18px);}
+.mo{display:none;position:fixed;inset:0;background:rgba(13,27,62,.45);backdrop-filter:blur(4px);z-index:500;align-items:center;justify-content:center;padding:18px;}
+.mo.open{display:flex;}
+.mb{background:var(--white);width:100%;max-width:660px;max-height:90vh;overflow-y:auto;padding:34px;}
+.mh{display:flex;align-items:center;justify-content:space-between;margin-bottom:22px;padding-bottom:14px;border-bottom:1px solid var(--border);}
+.mh h3{font-family:'Cormorant Garamond',serif;font-size:1.45rem;color:var(--navy);}
+.mc{background:none;border:none;font-size:1.2rem;cursor:pointer;color:var(--muted);transition:color .2s;}.mc:hover{color:var(--danger);}
+.notif{position:fixed;bottom:22px;right:22px;background:var(--navy);color:var(--white);padding:12px 18px;font-size:.78rem;z-index:9999;transform:translateY(80px);opacity:0;transition:all .35s;max-width:300px;}
+.notif.show{transform:translateY(0);opacity:1;}.notif.success{background:var(--success);}.notif.error{background:var(--danger);}
+.page-links{margin-top:8px;display:flex;flex-wrap:wrap;gap:6px;}
+.page-link-badge{font-size:.66rem;letter-spacing:.08em;background:rgba(184,149,90,.12);color:var(--gold);padding:4px 10px;}
+@media(max-width:900px){.sb{width:188px;}.dgrid{grid-template-columns:1fr 1fr;}.qa{grid-template-columns:1fr 1fr;}.fg{grid-template-columns:1fr;}}
 </style>
 </head>
 <body>
 <div class="notif" id="notif"></div>
 
 <!-- LOGIN -->
-<div id="loginScreen">
-  <div class="login-box">
-    <div class="login-logo">Nestox<span>.</span></div>
-    <div class="login-sub">Admin Dashboard</div>
-    <div class="login-field">
-      <label class="login-label">Username</label>
-      <input class="login-input" id="lUser" placeholder="admin" autocomplete="username">
-    </div>
-    <div class="login-field">
-      <label class="login-label">Password</label>
-      <input class="login-input" type="password" id="lPass" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLogin()">
-    </div>
-    <button class="login-btn" onclick="doLogin()">Sign In →</button>
-    <div class="login-err" id="loginErr">Invalid credentials. Please try again.</div>
-    <div class="login-hint">Demo credentials<br><strong>Username:</strong> admin &nbsp;|&nbsp; <strong>Password:</strong> nestox2025</div>
+<div id="ls">
+  <div class="lbox">
+    <div class="llogo">Nestox<span>.</span></div>
+    <div class="lsub">Admin Dashboard</div>
+    <div class="lfld"><label>Username</label><input id="lu" placeholder="admin" autocomplete="username"></div>
+    <div class="lfld"><label>Password</label><input id="lp" type="password" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLogin()"></div>
+    <button class="lbtn" onclick="doLogin()">Sign In →</button>
+    <div class="lerr" id="lerr">Invalid credentials.</div>
+    <div class="lhint"><strong>Username:</strong> admin &nbsp;|&nbsp; <strong>Password:</strong> nestox2025</div>
   </div>
 </div>
 
 <!-- APP -->
-<div id="adminApp">
-  <aside class="sidebar">
-    <div class="sb-logo">
-      <div class="sb-logo-text">Nestox<span>.</span></div>
-      <div class="sb-sub">Content Manager</div>
+<div id="app">
+  <aside class="sb">
+    <div class="sb-logo"><div class="sb-logo-t">Nestox<span>.</span></div><div class="sb-sub">Content Manager</div></div>
+    <div class="sb-sec"><div class="sb-sec-lbl">Overview</div><div class="sbi active" onclick="sp('dashboard')" data-p="dashboard"><span class="sbi-ico">⬛</span>Dashboard</div></div>
+    <div class="sb-sec"><div class="sb-sec-lbl">Pages</div>
+      <div class="sbi" onclick="sp('home')" data-p="home"><span class="sbi-ico">⬡</span>Home</div>
+      <div class="sbi" onclick="sp('about')" data-p="about"><span class="sbi-ico">◎</span>About Us</div>
+      <div class="sbi" onclick="sp('services')" data-p="services"><span class="sbi-ico">◇</span>Services</div>
+      <div class="sbi" onclick="sp('projects')" data-p="projects"><span class="sbi-ico">◉</span>Projects</div>
+      <div class="sbi" onclick="sp('blog')" data-p="blog"><span class="sbi-ico">✦</span>Blog</div>
+      <div class="sbi" onclick="sp('contact')" data-p="contact"><span class="sbi-ico">◌</span>Contact</div>
     </div>
-    <div class="sb-section">
-      <div class="sb-section-label">Overview</div>
-      <div class="sb-item active" onclick="showPanel('dashboard')" data-panel="dashboard"><span class="sb-icon">⬛</span>Dashboard</div>
+    <div class="sb-sec"><div class="sb-sec-lbl">Global</div>
+      <div class="sbi" onclick="sp('branding')" data-p="branding"><span class="sbi-ico">◈</span>Branding</div>
+      <div class="sbi" onclick="sp('nav')" data-p="nav"><span class="sbi-ico">≡</span>Navigation</div>
+      <div class="sbi" onclick="sp('footer')" data-p="footer"><span class="sbi-ico">▭</span>Footer</div>
+      <div class="sbi" onclick="sp('testimonials')" data-p="testimonials"><span class="sbi-ico">◆</span>Testimonials</div>
+      <div class="sbi" onclick="sp('visibility')" data-p="visibility"><span class="sbi-ico">◯</span>Visibility</div>
     </div>
-    <div class="sb-section">
-      <div class="sb-section-label">Site Content</div>
-      <div class="sb-item" onclick="showPanel('branding')" data-panel="branding"><span class="sb-icon">◈</span>Branding & Logo</div>
-      <div class="sb-item" onclick="showPanel('hero')" data-panel="hero"><span class="sb-icon">⬡</span>Hero Section</div>
-      <div class="sb-item" onclick="showPanel('about')" data-panel="about"><span class="sb-icon">◎</span>About</div>
-      <div class="sb-item" onclick="showPanel('services')" data-panel="services"><span class="sb-icon">◇</span>Services</div>
-      <div class="sb-item" onclick="showPanel('projects')" data-panel="projects"><span class="sb-icon">◉</span>Projects</div>
-      <div class="sb-item" onclick="showPanel('process')" data-panel="process"><span class="sb-icon">◈</span>Process</div>
-      <div class="sb-item" onclick="showPanel('testimonials')" data-panel="testimonials"><span class="sb-icon">◆</span>Testimonials</div>
-      <div class="sb-item" onclick="showPanel('contact')" data-panel="contact"><span class="sb-icon">◌</span>Contact</div>
-      <div class="sb-item" onclick="showPanel('footer')" data-panel="footer"><span class="sb-icon">▭</span>Footer</div>
-    </div>
-    <div class="sb-section">
-      <div class="sb-section-label">Blog</div>
-      <div class="sb-item" onclick="showPanel('blog')" data-panel="blog"><span class="sb-icon">✦</span>Blog Posts</div>
-    </div>
-    <div class="sb-section">
-      <div class="sb-section-label">Structure</div>
-      <div class="sb-item" onclick="showPanel('nav')" data-panel="nav"><span class="sb-icon">≡</span>Navigation</div>
-      <div class="sb-item" onclick="showPanel('pages')" data-panel="pages"><span class="sb-icon">☰</span>Custom Pages</div>
-      <div class="sb-item" onclick="showPanel('visibility')" data-panel="visibility"><span class="sb-icon">◯</span>Visibility</div>
-    </div>
-    <div class="sb-bottom">
-      <a class="sb-preview" href="index.html" target="_blank">↗ &nbsp;Preview Website</a>
-      <button class="sb-logout" onclick="doLogout()">⏻ &nbsp;Sign Out</button>
+    <div class="sb-bot">
+      <a class="sb-prev" href="index.html" target="_blank">↗ &nbsp;Preview Site</a>
+      <button class="sb-lgout" onclick="doLogout()">⏻ &nbsp;Sign Out</button>
     </div>
   </aside>
-
   <main class="main">
-    <div class="topbar">
-      <div class="topbar-title" id="panelTitle">Dashboard</div>
-      <div class="topbar-actions">
-        <span class="tb-badge">nestoxbuilders.com</span>
-        <button class="btn btn-navy btn-sm" onclick="saveAll()">💾 Save All</button>
+    <div class="tb">
+      <div class="tb-title" id="ptitle">Dashboard</div>
+      <div class="tb-acts">
+        <span class="tb-badge">nestox-website.vercel.app</span>
+        <button class="btn bn bsm" onclick="saveAll()">💾 Save All</button>
       </div>
     </div>
-    <div class="content">
+    <div class="ct">
 
       <!-- DASHBOARD -->
-      <div class="panel active" id="panel-dashboard">
-        <div class="dash-grid" id="dashStats"></div>
-        <div class="sec-hdr"><div><h2>Quick Actions</h2></div></div>
-        <div class="qa-grid">
-          <div class="qa-btn" onclick="showPanel('blog')"><div class="qa-icon">✦</div><div class="qa-title">New Blog Post</div><div class="qa-desc">Publish a new article</div></div>
-          <div class="qa-btn" onclick="showPanel('projects')"><div class="qa-icon">◉</div><div class="qa-title">Add Project</div><div class="qa-desc">Showcase a completed project</div></div>
-          <div class="qa-btn" onclick="showPanel('hero')"><div class="qa-icon">⬡</div><div class="qa-title">Edit Hero</div><div class="qa-desc">Update homepage headline</div></div>
-          <div class="qa-btn" onclick="showPanel('services')"><div class="qa-icon">◇</div><div class="qa-title">Manage Services</div><div class="qa-desc">Add or edit service cards</div></div>
-          <div class="qa-btn" onclick="showPanel('branding')"><div class="qa-icon">◈</div><div class="qa-title">Update Logo</div><div class="qa-desc">Change logo or brand name</div></div>
-          <div class="qa-btn" onclick="showPanel('visibility')"><div class="qa-icon">◯</div><div class="qa-title">Toggle Sections</div><div class="qa-desc">Show or hide site sections</div></div>
+      <div class="panel active" id="p-dashboard">
+        <div class="dgrid" id="dstats"></div>
+        <div class="sh"><div><h2>Quick Actions</h2></div></div>
+        <div class="qa">
+          <div class="qa-btn" onclick="sp('blog')"><div class="qa-ico">✦</div><div class="qa-t">New Blog Post</div><div class="qa-d">Publish an article</div></div>
+          <div class="qa-btn" onclick="sp('projects')"><div class="qa-ico">◉</div><div class="qa-t">Add Project</div><div class="qa-d">Showcase your work</div></div>
+          <div class="qa-btn" onclick="sp('home')"><div class="qa-ico">⬡</div><div class="qa-t">Edit Homepage</div><div class="qa-d">Update hero & content</div></div>
+          <div class="qa-btn" onclick="sp('services')"><div class="qa-ico">◇</div><div class="qa-t">Edit Services</div><div class="qa-d">Manage service cards</div></div>
+          <div class="qa-btn" onclick="sp('branding')"><div class="qa-ico">◈</div><div class="qa-t">Branding</div><div class="qa-d">Logo & brand name</div></div>
+          <div class="qa-btn" onclick="sp('visibility')"><div class="qa-ico">◯</div><div class="qa-t">Visibility</div><div class="qa-d">Show/hide sections</div></div>
         </div>
-        <div class="sec-hdr"><div><h2>Recent Blog Posts</h2></div><button class="btn btn-navy btn-sm" onclick="showPanel('blog')">Manage →</button></div>
-        <div id="dashBlogList"></div>
+        <div class="sh"><div><h2>Pages Overview</h2></div></div>
+        <div class="page-links" id="pageLinks"></div>
+        <div class="sh" style="margin-top:24px;"><div><h2>Recent Blog Posts</h2></div><button class="btn bn bsm" onclick="sp('blog')">Manage →</button></div>
+        <div id="dblogs"></div>
       </div>
 
-      <!-- BRANDING -->
-      <div class="panel" id="panel-branding">
-        <div class="form-grid">
-          <div>
-            <div class="fld"><label>Brand Name</label><input id="brand_logoText"></div>
-            <div class="fld"><label>Tagline</label><input id="brand_tagline"></div>
-            <div class="fld"><label>Logo Image URL <span style="color:var(--muted);font-weight:300;">(leave blank for text logo)</span></label>
-              <input type="url" id="brand_logoUrl" oninput="prevImg('brand_logoUrl','brandPrev')">
-              <div class="img-preview" id="brandPrev">Logo preview</div>
-            </div>
-          </div>
-          <div>
-            <div class="fld"><label>Favicon URL</label><input type="url" id="brand_favicon"></div>
-            <div style="background:var(--cream);padding:16px;margin-top:8px;font-size:.78rem;color:var(--muted);line-height:1.8;">
-              <strong>Admin Login</strong><br>
-              Username: <code>admin</code><br>
-              Password: <code>nestox2025</code><br><br>
-              To change credentials, edit the <code>CREDS</code> object in admin.html
-            </div>
-          </div>
+      <!-- HOME -->
+      <div class="panel" id="p-home">
+        <div class="sh"><div><h2>Homepage — Hero Section</h2></div></div>
+        <div class="fg">
+          <div><div class="fld"><label>Eyebrow Text</label><input id="h_eye"></div>
+          <div class="fld"><label>Title Line 1</label><input id="h_t1"></div>
+          <div class="fld"><label>Title Italic (gold)</label><input id="h_t2"></div>
+          <div class="fld"><label>Title Line 3</label><input id="h_t3"></div>
+          <div class="fld"><label>Description</label><textarea id="h_desc" style="min-height:72px;"></textarea></div>
+          <div class="fld"><label>Button 1 Label</label><input id="h_b1"></div>
+          <div class="fld"><label>Button 1 Link</label><input id="h_b1h"></div>
+          <div class="fld"><label>Button 2 Label</label><input id="h_b2"></div></div>
+          <div><div class="fld"><label>Hero Image URL</label><input type="url" id="h_img" oninput="pv('h_img','h_imgp')"><div class="iprev" id="h_imgp"></div></div>
+          <div style="font-size:.64rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:14px 0 8px;">Stats (3 items)</div>
+          <div id="hstats"></div></div>
         </div>
-        <div class="save-bar"><button class="btn btn-navy" onclick="saveBranding()">💾 Save Branding</button><div class="save-msg" id="sm-branding">✓ Saved!</div></div>
-      </div>
-
-      <!-- HERO -->
-      <div class="panel" id="panel-hero">
-        <div class="form-grid">
-          <div>
-            <div class="fld"><label>Eyebrow Text</label><input id="hero_eyebrow"></div>
-            <div class="fld"><label>Title Line 1</label><input id="hero_title"></div>
-            <div class="fld"><label>Title Line 2 (italic gold)</label><input id="hero_titleItalic"></div>
-            <div class="fld"><label>Title Line 3</label><input id="hero_titleEnd"></div>
-            <div class="fld"><label>Description</label><textarea id="hero_description" style="min-height:80px;"></textarea></div>
-            <div class="fld"><label>Primary Button Label</label><input id="hero_btnPrimary"></div>
-            <div class="fld"><label>Ghost Button Label</label><input id="hero_btnGhost"></div>
-          </div>
-          <div>
-            <div class="fld"><label>Hero Image URL</label>
-              <input type="url" id="hero_imageUrl" oninput="prevImg('hero_imageUrl','heroPrev')">
-              <div class="img-preview" id="heroPrev"></div>
-            </div>
-            <div style="font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:14px 0 8px;">Stats</div>
-            <div id="heroStats"></div>
-          </div>
-        </div>
-        <div class="save-bar"><button class="btn btn-navy" onclick="saveHero()">💾 Save Hero</button><div class="save-msg" id="sm-hero">✓ Saved!</div></div>
+        <div class="savebar"><button class="btn bn" onclick="saveHome()">💾 Save Homepage</button><div class="smsg" id="sm-home">✓ Saved!</div></div>
       </div>
 
       <!-- ABOUT -->
-      <div class="panel" id="panel-about">
-        <div class="form-grid">
+      <div class="panel" id="p-about">
+        <div class="sh"><div><h2>About Us Page</h2></div></div>
+        <div class="fg">
           <div>
-            <div class="fld"><label>Eyebrow</label><input id="about_eyebrow"></div>
-            <div class="fld"><label>Title Line 1</label><input id="about_title"></div>
-            <div class="fld"><label>Title Italic</label><input id="about_titleItalic"></div>
-            <div class="fld"><label>Title Line 3</label><input id="about_titleEnd"></div>
-            <div class="fld"><label>Paragraph 1</label><textarea id="about_body1"></textarea></div>
-            <div class="fld"><label>Paragraph 2</label><textarea id="about_body2"></textarea></div>
-            <div class="fld"><label>Established Year</label><input id="about_established"></div>
+            <div class="fld"><label>Eyebrow</label><input id="ab_eye"></div>
+            <div class="fld"><label>Title Line 1</label><input id="ab_t1"></div>
+            <div class="fld"><label>Title Italic</label><input id="ab_ti"></div>
+            <div class="fld"><label>Title Line 3</label><input id="ab_t3"></div>
+            <div class="fld"><label>Short Description (Hero)</label><textarea id="ab_b1"></textarea></div>
+            <div class="fld"><label>Full Story (shown on About page)</label><textarea id="ab_full" style="min-height:160px;"></textarea></div>
+            <div class="fld"><label>Established Year</label><input id="ab_est"></div>
           </div>
           <div>
-            <div class="fld"><label>About Image URL</label>
-              <input type="url" id="about_imageUrl" oninput="prevImg('about_imageUrl','aboutPrev')">
-              <div class="img-preview" id="aboutPrev"></div>
-            </div>
-            <div style="font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:14px 0 8px;">4 Pillars</div>
-            <div id="aboutPillars"></div>
+            <div class="fld"><label>About Image URL</label><input type="url" id="ab_img" oninput="pv('ab_img','ab_imgp')"><div class="iprev" id="ab_imgp"></div></div>
+            <div style="font-size:.64rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:14px 0 8px;">4 Pillars</div>
+            <div id="pillars"></div>
           </div>
         </div>
-        <div class="save-bar"><button class="btn btn-navy" onclick="saveAbout()">💾 Save About</button><div class="save-msg" id="sm-about">✓ Saved!</div></div>
+        <div class="savebar"><button class="btn bn" onclick="saveAbout()">💾 Save About</button><div class="smsg" id="sm-about">✓ Saved!</div></div>
       </div>
 
       <!-- SERVICES -->
-      <div class="panel" id="panel-services">
-        <div class="sec-hdr"><div><h2>Services</h2><p>Add, edit or remove service cards</p></div><button class="btn btn-navy btn-sm" onclick="addService()">+ Add Service</button></div>
-        <div class="card-list" id="servicesList"></div>
-        <div class="save-bar"><button class="btn btn-navy" onclick="saveServices()">💾 Save Services</button><div class="save-msg" id="sm-services">✓ Saved!</div></div>
+      <div class="panel" id="p-services">
+        <div class="sh"><div><h2>Services Page</h2><p>Each service shows on the Services page with full description and image</p></div><button class="btn bn bsm" onclick="addSvc()">+ Add Service</button></div>
+        <div class="cl" id="svcList"></div>
+        <div class="savebar"><button class="btn bn" onclick="saveSvc()">💾 Save Services</button><div class="smsg" id="sm-services">✓ Saved!</div></div>
       </div>
 
       <!-- PROJECTS -->
-      <div class="panel" id="panel-projects">
-        <div class="sec-hdr"><div><h2>Projects</h2><p>Portfolio showcase items</p></div><button class="btn btn-navy btn-sm" onclick="openProjectModal()">+ Add Project</button></div>
-        <div class="card-list" id="projectsList"></div>
-        <div class="save-bar"><button class="btn btn-navy" onclick="saveNow()">💾 Save</button><div class="save-msg" id="sm-projects">✓ Saved!</div></div>
-      </div>
-
-      <!-- PROCESS -->
-      <div class="panel" id="panel-process">
-        <div class="sec-hdr"><div><h2>Build Process</h2><p>4-step process cards</p></div></div>
-        <div id="processList" style="display:flex;flex-direction:column;gap:12px;"></div>
-        <div class="save-bar"><button class="btn btn-navy" onclick="saveProcess()">💾 Save Process</button><div class="save-msg" id="sm-process">✓ Saved!</div></div>
-      </div>
-
-      <!-- TESTIMONIALS -->
-      <div class="panel" id="panel-testimonials">
-        <div class="sec-hdr"><div><h2>Testimonials</h2><p>Client reviews</p></div><button class="btn btn-navy btn-sm" onclick="addTestimonial()">+ Add</button></div>
-        <div class="card-list" id="testimonialsList"></div>
-        <div class="save-bar"><button class="btn btn-navy" onclick="saveTestimonials()">💾 Save</button><div class="save-msg" id="sm-testimonials">✓ Saved!</div></div>
-      </div>
-
-      <!-- CONTACT -->
-      <div class="panel" id="panel-contact">
-        <div class="form-grid">
-          <div>
-            <div class="fld"><label>Office Address</label><textarea id="contact_address" style="min-height:70px;"></textarea></div>
-            <div class="fld"><label>Phone 1</label><input id="contact_phone1"></div>
-            <div class="fld"><label>Phone 2 (UAE/KSA)</label><input id="contact_phone2"></div>
-          </div>
-          <div>
-            <div class="fld"><label>Email</label><input type="email" id="contact_email"></div>
-            <div class="fld"><label>Working Hours</label><input id="contact_hours"></div>
-          </div>
-        </div>
-        <div class="save-bar"><button class="btn btn-navy" onclick="saveContact()">💾 Save Contact</button><div class="save-msg" id="sm-contact">✓ Saved!</div></div>
-      </div>
-
-      <!-- FOOTER -->
-      <div class="panel" id="panel-footer">
-        <div class="form-grid">
-          <div>
-            <div class="fld"><label>Footer Tagline</label><textarea id="footer_tagline" style="min-height:80px;"></textarea></div>
-            <div class="fld"><label>Copyright Text</label><input id="footer_copyright"></div>
-            <div class="fld"><label>Certifications</label><input id="footer_certifications"></div>
-          </div>
-          <div>
-            <div style="font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:10px;">Social Links</div>
-            <div class="fld"><label>LinkedIn URL</label><input type="url" id="footer_linkedin"></div>
-            <div class="fld"><label>Instagram URL</label><input type="url" id="footer_instagram"></div>
-            <div class="fld"><label>Facebook URL</label><input type="url" id="footer_facebook"></div>
-            <div class="fld"><label>YouTube URL</label><input type="url" id="footer_youtube"></div>
-          </div>
-        </div>
-        <div class="save-bar"><button class="btn btn-navy" onclick="saveFooter()">💾 Save Footer</button><div class="save-msg" id="sm-footer">✓ Saved!</div></div>
+      <div class="panel" id="p-projects">
+        <div class="sh"><div><h2>Projects Page</h2><p>Manage portfolio items — all shown on the Projects page</p></div><button class="btn bn bsm" onclick="openProjMo()">+ Add Project</button></div>
+        <div class="cl" id="projList"></div>
+        <div class="savebar"><button class="btn bn" onclick="saveProj()">💾 Save Projects</button><div class="smsg" id="sm-projects">✓ Saved!</div></div>
       </div>
 
       <!-- BLOG -->
-      <div class="panel" id="panel-blog">
-        <div class="sec-hdr">
-          <div><h2>Blog Posts</h2><p id="blogNote"></p></div>
-          <button class="btn btn-navy btn-sm" onclick="openBlogModal()">+ New Post</button>
+      <div class="panel" id="p-blog">
+        <div class="sh"><div><h2>Blog Page</h2><p id="blogNote"></p></div><button class="btn bn bsm" onclick="openBlogMo()">+ New Post</button></div>
+        <div class="tblw"><table><thead><tr><th>Title</th><th>Category</th><th>Author</th><th>Date</th><th>Status</th><th>Actions</th></tr></thead><tbody id="blogtb"></tbody></table></div>
+      </div>
+
+      <!-- CONTACT -->
+      <div class="panel" id="p-contact">
+        <div class="sh"><div><h2>Contact Page</h2><p>No form — only contact info, offices and map</p></div></div>
+        <div class="fg">
+          <div>
+            <div class="fld"><label>Phone 1 (India)</label><input id="c_p1"></div>
+            <div class="fld"><label>Phone 2 (UAE)</label><input id="c_p2"></div>
+            <div class="fld"><label>Phone 3 (KSA)</label><input id="c_p3"></div>
+            <div class="fld"><label>Email</label><input type="email" id="c_em"></div>
+            <div class="fld"><label>WhatsApp Number (with country code, digits only)</label><input id="c_wa" placeholder="919847500000"></div>
+          </div>
+          <div>
+            <div class="fld"><label>Head Office Address</label><textarea id="c_addr" style="min-height:72px;"></textarea></div>
+            <div class="fld"><label>UAE Office</label><input id="c_dub"></div>
+            <div class="fld"><label>KSA Office</label><input id="c_riy"></div>
+            <div class="fld"><label>Working Hours</label><input id="c_hrs"></div>
+            <div class="fld"><label>Google Maps Embed URL (optional)</label><input type="url" id="c_map"></div>
+          </div>
         </div>
-        <div class="tbl-wrap">
-          <table><thead><tr><th>Title</th><th>Category</th><th>Author</th><th>Date</th><th>Status</th><th>Actions</th></tr></thead>
-          <tbody id="blogTbody"></tbody></table>
+        <div class="savebar"><button class="btn bn" onclick="saveContact()">💾 Save Contact</button><div class="smsg" id="sm-contact">✓ Saved!</div></div>
+      </div>
+
+      <!-- BRANDING -->
+      <div class="panel" id="p-branding">
+        <div class="sh"><div><h2>Branding & Logo</h2></div></div>
+        <div class="fg">
+          <div>
+            <div class="fld"><label>Brand Name</label><input id="br_name"></div>
+            <div class="fld"><label>Tagline</label><input id="br_tag"></div>
+            <div class="fld"><label>Logo Image URL (leave blank for text logo)</label><input type="url" id="br_logo" oninput="pv('br_logo','br_logop')"><div class="iprev" id="br_logop" style="height:80px;">Logo preview</div></div>
+          </div>
+          <div>
+            <div style="background:var(--cream);padding:16px;font-size:.76rem;color:var(--muted);line-height:1.8;margin-top:28px;">
+              <strong>Admin Credentials</strong><br>Username: <code>admin</code><br>Password: <code>nestox2025</code><br><br>Change in <code>admin.html</code> → <code>CREDS</code> object
+            </div>
+          </div>
         </div>
+        <div class="savebar"><button class="btn bn" onclick="saveBranding()">💾 Save Branding</button><div class="smsg" id="sm-branding">✓ Saved!</div></div>
       </div>
 
       <!-- NAV -->
-      <div class="panel" id="panel-nav">
-        <div class="sec-hdr"><div><h2>Navigation Links</h2></div><button class="btn btn-navy btn-sm" onclick="addNavLink()">+ Add Link</button></div>
-        <div class="card-list" id="navList"></div>
-        <div style="margin-top:24px;">
-          <div class="sec-hdr"><div><h2>CTA Button</h2></div></div>
-          <div class="form-grid">
-            <div class="fld"><label>Button Label</label><input id="nav_ctaLabel"></div>
-            <div class="fld"><label>Button Link</label><input id="nav_ctaHref"></div>
-          </div>
+      <div class="panel" id="p-nav">
+        <div class="sh"><div><h2>Navigation</h2></div><button class="btn bn bsm" onclick="addNavLink()">+ Add Link</button></div>
+        <div class="cl" id="navList"></div>
+        <div style="margin-top:20px;"><div class="sh"><div><h2>CTA Button</h2></div></div>
+          <div class="fg"><div class="fld"><label>Button Label</label><input id="n_ctal"></div><div class="fld"><label>Button Link</label><input id="n_ctah"></div></div>
         </div>
-        <div class="save-bar"><button class="btn btn-navy" onclick="saveNav()">💾 Save Navigation</button><div class="save-msg" id="sm-nav">✓ Saved!</div></div>
+        <div class="savebar"><button class="btn bn" onclick="saveNav()">💾 Save Navigation</button><div class="smsg" id="sm-nav">✓ Saved!</div></div>
       </div>
 
-      <!-- PAGES -->
-      <div class="panel" id="panel-pages">
-        <div class="sec-hdr"><div><h2>Custom Pages</h2><p>Standalone pages linked from footer</p></div><button class="btn btn-navy btn-sm" onclick="openPageModal()">+ New Page</button></div>
-        <div class="card-list" id="pagesList"></div>
+      <!-- FOOTER -->
+      <div class="panel" id="p-footer">
+        <div class="sh"><div><h2>Footer</h2></div></div>
+        <div class="fg">
+          <div>
+            <div class="fld"><label>Tagline</label><textarea id="f_tag" style="min-height:72px;"></textarea></div>
+            <div class="fld"><label>Copyright Text</label><input id="f_copy"></div>
+            <div class="fld"><label>Certifications</label><input id="f_cert"></div>
+          </div>
+          <div>
+            <div style="font-size:.64rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:10px;">Social Links</div>
+            <div class="fld"><label>LinkedIn URL</label><input type="url" id="f_li"></div>
+            <div class="fld"><label>Instagram URL</label><input type="url" id="f_ig"></div>
+            <div class="fld"><label>Facebook URL</label><input type="url" id="f_fb"></div>
+            <div class="fld"><label>YouTube URL</label><input type="url" id="f_yt"></div>
+          </div>
+        </div>
+        <div class="savebar"><button class="btn bn" onclick="saveFooter()">💾 Save Footer</button><div class="smsg" id="sm-footer">✓ Saved!</div></div>
+      </div>
+
+      <!-- TESTIMONIALS -->
+      <div class="panel" id="p-testimonials">
+        <div class="sh"><div><h2>Testimonials</h2></div><button class="btn bn bsm" onclick="addTesti()">+ Add</button></div>
+        <div class="cl" id="testiList"></div>
+        <div class="savebar"><button class="btn bn" onclick="saveTesti()">💾 Save Testimonials</button><div class="smsg" id="sm-testimonials">✓ Saved!</div></div>
       </div>
 
       <!-- VISIBILITY -->
-      <div class="panel" id="panel-visibility">
-        <div class="sec-hdr"><div><h2>Section Visibility</h2><p>Toggle which sections appear on the website</p></div></div>
-        <div class="toggle-group" id="visibilityToggles"></div>
-        <div class="save-bar"><button class="btn btn-navy" onclick="saveVisibility()">💾 Save Settings</button><div class="save-msg" id="sm-visibility">✓ Saved!</div></div>
+      <div class="panel" id="p-visibility">
+        <div class="sh"><div><h2>Section Visibility</h2><p>Control which sections appear on the homepage</p></div></div>
+        <div class="tg-grp" id="visToggles"></div>
+        <div class="savebar"><button class="btn bn" onclick="saveVis()">💾 Save Settings</button><div class="smsg" id="sm-visibility">✓ Saved!</div></div>
       </div>
 
     </div>
@@ -435,486 +331,250 @@ tr:hover td{background:rgba(245,242,236,.5);}
 </div>
 
 <!-- PROJECT MODAL -->
-<div class="modal-overlay" id="projectModal">
-  <div class="modal-box">
-    <div class="modal-hdr"><h3 id="projModalTitle">Add Project</h3><button class="modal-close" onclick="closeModal('projectModal')">✕</button></div>
-    <input type="hidden" id="proj_id">
-    <div class="form-grid">
-      <div class="fld form-full"><label>Project Name</label><input id="proj_name"></div>
-      <div class="fld"><label>Tag</label><input id="proj_tag" placeholder="Residential · Dubai"></div>
-      <div class="fld"><label>Type</label><select id="proj_type"><option value="residential">Residential</option><option value="commercial">Commercial</option><option value="interior">Interior</option></select></div>
-      <div class="fld form-full"><label>Location & Year</label><input id="proj_location" placeholder="Kowdiar, Kerala — 2024"></div>
-      <div class="fld form-full"><label>Image URL</label>
-        <input type="url" id="proj_imageUrl" oninput="prevImg('proj_imageUrl','projPrev')">
-        <div class="img-preview" id="projPrev"></div>
-      </div>
-      <div class="fld"><label>Large Card (2 columns)</label><select id="proj_large"><option value="false">No</option><option value="true">Yes</option></select></div>
+<div class="mo" id="projMo">
+  <div class="mb"><div class="mh"><h3 id="pmt">Add Project</h3><button class="mc" onclick="cm('projMo')">✕</button></div>
+    <input type="hidden" id="pm_id">
+    <div class="fg">
+      <div class="fld ff"><label>Project Name</label><input id="pm_name"></div>
+      <div class="fld"><label>Tag Line</label><input id="pm_tag" placeholder="Residential · Dubai"></div>
+      <div class="fld"><label>Type</label><select id="pm_type"><option value="residential">Residential</option><option value="commercial">Commercial</option><option value="interior">Interior</option></select></div>
+      <div class="fld ff"><label>Location & Year</label><input id="pm_loc" placeholder="Kowdiar, Kerala — 2024"></div>
+      <div class="fld ff"><label>Short Description</label><textarea id="pm_desc" style="min-height:72px;"></textarea></div>
+      <div class="fld ff"><label>Image URL</label><input type="url" id="pm_img" oninput="pv('pm_img','pm_imgp')"><div class="iprev" id="pm_imgp"></div></div>
+      <div class="fld"><label>Large Card (2 cols)</label><select id="pm_large"><option value="false">No</option><option value="true">Yes</option></select></div>
     </div>
-    <div style="display:flex;gap:10px;margin-top:8px;">
-      <button class="btn btn-navy" onclick="saveProject()">Save Project</button>
-      <button class="btn btn-outline" onclick="closeModal('projectModal')">Cancel</button>
-    </div>
+    <div style="display:flex;gap:9px;margin-top:6px;"><button class="btn bn" onclick="saveProjItem()">Save Project</button><button class="btn bo" onclick="cm('projMo')">Cancel</button></div>
   </div>
 </div>
 
 <!-- BLOG MODAL -->
-<div class="modal-overlay" id="blogModal">
-  <div class="modal-box" style="max-width:720px;">
-    <div class="modal-hdr"><h3 id="blogModalTitle">New Blog Post</h3><button class="modal-close" onclick="closeModal('blogModal')">✕</button></div>
-    <input type="hidden" id="blog_id">
-    <div class="form-grid">
-      <div class="fld form-full"><label>Post Title</label><input id="blog_title" placeholder="Compelling headline..."></div>
-      <div class="fld"><label>Category</label><input id="blog_category" placeholder="Insights, News, Design..."></div>
-      <div class="fld"><label>Author</label><input id="blog_author" placeholder="Nestox Team"></div>
-      <div class="fld"><label>Date</label><input id="blog_date" placeholder="March 2025"></div>
-      <div class="fld"><label>Status</label><select id="blog_status"><option value="published">Published</option><option value="draft">Draft</option></select></div>
-      <div class="fld form-full"><label>Featured Image URL</label>
-        <input type="url" id="blog_imageUrl" oninput="prevImg('blog_imageUrl','blogImgPrev')">
-        <div class="img-preview" id="blogImgPrev"></div>
-      </div>
-      <div class="fld form-full"><label>Excerpt (short summary for card)</label><textarea id="blog_excerpt" style="min-height:70px;" placeholder="2-3 sentence summary..."></textarea></div>
-      <div class="fld form-full"><label>Full Content</label><textarea id="blog_content" style="min-height:200px;" placeholder="Write full blog post here..."></textarea></div>
+<div class="mo" id="blogMo">
+  <div class="mb" style="max-width:700px;"><div class="mh"><h3 id="bmt">New Blog Post</h3><button class="mc" onclick="cm('blogMo')">✕</button></div>
+    <input type="hidden" id="bm_id">
+    <div class="fg">
+      <div class="fld ff"><label>Post Title</label><input id="bm_title" placeholder="Compelling headline..."></div>
+      <div class="fld"><label>Category</label><input id="bm_cat" placeholder="Insights, News, Design..."></div>
+      <div class="fld"><label>Author</label><input id="bm_author" placeholder="Nestox Team"></div>
+      <div class="fld"><label>Date</label><input id="bm_date" placeholder="March 2025"></div>
+      <div class="fld"><label>Status</label><select id="bm_status"><option value="published">Published</option><option value="draft">Draft</option></select></div>
+      <div class="fld ff"><label>Featured Image URL</label><input type="url" id="bm_img" oninput="pv('bm_img','bm_imgp')"><div class="iprev" id="bm_imgp"></div></div>
+      <div class="fld ff"><label>Excerpt (shown in card)</label><textarea id="bm_exc" style="min-height:64px;"></textarea></div>
+      <div class="fld ff"><label>Full Content (shown when reading)</label><textarea id="bm_content" style="min-height:180px;"></textarea></div>
     </div>
-    <div style="display:flex;gap:10px;margin-top:8px;">
-      <button class="btn btn-navy" onclick="saveBlogPost()">Save Post</button>
-      <button class="btn btn-outline" onclick="closeModal('blogModal')">Cancel</button>
-    </div>
+    <div style="display:flex;gap:9px;margin-top:6px;"><button class="btn bn" onclick="saveBlogItem()">Publish Post</button><button class="btn bo" onclick="cm('blogMo')">Cancel</button></div>
   </div>
 </div>
 
-<!-- PAGE MODAL -->
-<div class="modal-overlay" id="pageModal">
-  <div class="modal-box">
-    <div class="modal-hdr"><h3 id="pageModalTitle">New Page</h3><button class="modal-close" onclick="closeModal('pageModal')">✕</button></div>
-    <input type="hidden" id="page_id">
-    <div class="fld"><label>Page Title</label><input id="page_title"></div>
-    <div class="fld"><label>Eyebrow Label</label><input id="page_eyebrow" placeholder="e.g. Legal"></div>
-    <div class="fld"><label>Content</label><textarea id="page_content" style="min-height:200px;"></textarea></div>
-    <div style="display:flex;gap:10px;margin-top:8px;">
-      <button class="btn btn-navy" onclick="savePage()">Save Page</button>
-      <button class="btn btn-outline" onclick="closeModal('pageModal')">Cancel</button>
-    </div>
+<!-- SERVICE MODAL -->
+<div class="mo" id="svcMo">
+  <div class="mb"><div class="mh"><h3 id="smt">Edit Service</h3><button class="mc" onclick="cm('svcMo')">✕</button></div>
+    <input type="hidden" id="sm_idx">
+    <div class="fld"><label>Number</label><input id="sm_num"></div>
+    <div class="fld"><label>Title</label><input id="sm_title"></div>
+    <div class="fld"><label>Short Description (shown on homepage)</label><textarea id="sm_desc" style="min-height:64px;"></textarea></div>
+    <div class="fld"><label>Full Description (shown on Services page)</label><textarea id="sm_full" style="min-height:100px;"></textarea></div>
+    <div class="fld"><label>Image URL</label><input type="url" id="sm_img" oninput="pv('sm_img','sm_imgp')"><div class="iprev" id="sm_imgp"></div></div>
+    <div style="display:flex;gap:9px;margin-top:6px;"><button class="btn bn" onclick="saveSvcItem()">Save Service</button><button class="btn bo" onclick="cm('svcMo')">Cancel</button></div>
   </div>
 </div>
 
 <script>
-// ─── CREDENTIALS (change here) ─────────────────────────────────────────────────
-const CREDS = { user:'admin', pass:'nestox2025' };
-
-// ─── DATA LAYER ────────────────────────────────────────────────────────────────
-const NESTOX_KEY='nestox_site_data';
-const DEFAULT_DATA={
-  brand:{logoText:'Nestox',logoUrl:'',tagline:'Crafting Premium Spaces',favicon:''},
-  hero:{
-    eyebrow:'Luxury Construction & Development',
-    title:'We Build',titleItalic:'Spaces That',titleEnd:'Inspire Life',
-    description:'Nestox Builders crafts premium residential and commercial spaces across the UAE and India — where architectural excellence meets timeless living.',
-    btnPrimary:'Explore Projects',btnGhost:'Our Story',
-    imageUrl:'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1200&q=80',
-    stats:[{num:'18+',label:'Years Building'},{num:'240+',label:'Projects Done'},{num:'98%',label:'Client Satisfaction'}],
-  },
-  about:{
-    eyebrow:'Who We Are',title:'Building Legacy',titleItalic:'One Stone at',titleEnd:'a Time',
-    body1:'Founded in 2006, Nestox Builders has earned its place as a benchmark of quality in premium construction.',
-    body2:'From luxury villas in Kerala to commercial landmarks in the Gulf, our work spans borders while staying true to a single principle: build what endures.',
-    imageUrl:'https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=900&q=80',
-    established:'2006',
-    pillars:[
-      {icon:'◈',title:'Precision Craft',desc:'Every joint, finish, and facade executed with uncompromising attention.'},
-      {icon:'◎',title:'Timely Delivery',desc:'We honour deadlines as commitments, not estimates.'},
-      {icon:'◇',title:'Transparent Pricing',desc:'Clear, honest costing with no hidden surprises.'},
-      {icon:'◉',title:'Green Building',desc:'Sustainable practices woven from foundation to finish.'},
-    ],
-  },
-  services:[
-    {num:'01',title:'Residential Construction',desc:'From intimate family homes to sprawling luxury villas.'},
-    {num:'02',title:'Commercial Projects',desc:'Offices, retail spaces, and institutional buildings.'},
-    {num:'03',title:'Interior Design',desc:'Bespoke interiors — curated materials, spatial harmony, soulful finishes.'},
-    {num:'04',title:'Renovation & Restoration',desc:'Breathing new life into existing structures.'},
-    {num:'05',title:'Turnkey Contracting',desc:'End-to-end delivery — from drawings to handing over the keys.'},
-    {num:'06',title:'MEP & Infrastructure',desc:'Mechanical, electrical, and plumbing systems engineered for longevity.'},
-  ],
-  projects:[
-    {id:'p1',name:'Nestox The Grand Palms',tag:'Residential · Trivandrum',location:'Kowdiar, Kerala — 2023',type:'residential',imageUrl:'https://images.unsplash.com/photo-1613977257363-707ba9348227?w=1200&q=80',large:true},
-    {id:'p2',name:'Vertex Business Hub',tag:'Commercial · Dubai',location:'DIFC, Dubai — 2022',type:'commercial',imageUrl:'https://images.unsplash.com/photo-1486325212027-8081e485255e?w=800&q=80',large:false},
-    {id:'p3',name:'Aurum Penthouse',tag:'Interior · Kochi',location:'Marine Drive, Kochi — 2023',type:'interior',imageUrl:'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=800&q=80',large:false},
-    {id:'p4',name:'Serenity Villa',tag:'Residential · Abu Dhabi',location:'Al Raha Beach — 2024',type:'residential',imageUrl:'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&q=80',large:false},
-    {id:'p5',name:'The Chronicle Tower',tag:'Commercial · Riyadh',location:'King Abdullah Financial District — 2024',type:'commercial',imageUrl:'https://images.unsplash.com/photo-1497366216548-37526070297c?w=1200&q=80',large:true},
-  ],
-  testimonials:[
-    {initial:'R',name:'Rajesh Menon',role:'Villa Client · Trivandrum, 2023',text:'Working with Nestox was the single best decision we made. They transformed a barren plot into a home that exceeded every expectation.'},
-    {initial:'F',name:'Faris Al Mansoori',role:'Commercial Client · Dubai, 2022',text:'The attention to detail was extraordinary. From the choice of marble to the placement of every light fixture — Nestox treated our office like it was their own.'},
-    {initial:'P',name:'Priya Chandran',role:'Interior Client · Kochi, 2023',text:'Our penthouse renovation was complex. Nestox managed everything flawlessly — a true turnkey experience.'},
-    {initial:'K',name:'Khalid Saeed',role:'Commercial Client · Riyadh, 2024',text:"I've worked with builders across the GCC. Nestox stands apart — professionalism and quality unmatched in the region."},
-  ],
-  contact:{address:'TC 45/2196, Near Technopark,\nKazhakkoottam, Trivandrum — 695582',phone1:'+91 98475 00000',phone2:'+971 4 000 0000 (UAE)',email:'hello@nestoxbuilders.com',hours:'Mon – Sat: 9:00 AM – 6:00 PM'},
+const CREDS={user:'admin',pass:'nestox2025'};
+const KEY='nestox_v4';
+const DEFAULT={
+  brand:{logoText:'Nestox',logoUrl:'',tagline:'Crafting Premium Spaces'},
+  nav:{links:[{label:'Home',href:'index.html'},{label:'About',href:'about.html'},{label:'Services',href:'services.html'},{label:'Projects',href:'projects.html'},{label:'Blog',href:'blog.html'},{label:'Contact',href:'contact.html'}],ctaLabel:'Enquire Now',ctaHref:'contact.html'},
+  hero:{eyebrow:'Luxury Construction & Development',title:'We Build',titleItalic:'Spaces That',titleEnd:'Inspire Life',desc:'Nestox Builders crafts premium residential and commercial spaces.',btn1:'Explore Projects',btn1href:'projects.html',btn2:'Our Story',btn2href:'about.html',imageUrl:'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1200&q=80',stats:[{num:'18+',label:'Years Building'},{num:'240+',label:'Projects Done'},{num:'98%',label:'Client Satisfaction'}]},
+  about:{eyebrow:'Who We Are',title:'Building Legacy',titleItalic:'One Stone at',titleEnd:'a Time',body1:'Founded in 2006, Nestox Builders has earned its place as a benchmark of quality.',body2:'From luxury villas in Kerala to commercial landmarks in the Gulf.',imageUrl:'https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=900&q=80',established:'2006',fullBody:'Nestox Builders was founded with a singular vision — to redefine what premium construction means in South Asia and the Gulf.',pillars:[{icon:'◈',title:'Precision Craft',desc:'Every joint, finish, and facade executed with uncompromising attention.'},{icon:'◎',title:'Timely Delivery',desc:'We honour deadlines as commitments, not estimates.'},{icon:'◇',title:'Transparent Pricing',desc:'Clear, honest costing with no hidden surprises.'},{icon:'◉',title:'Green Building',desc:'Sustainable practices woven from foundation to finish.'}]},
+  services:[{num:'01',title:'Residential Construction',desc:'From intimate family homes to sprawling luxury villas.',fullDesc:'We design and build residences that reflect your personality and exceed your expectations.',imageUrl:'https://images.unsplash.com/photo-1613977257363-707ba9348227?w=800&q=80'},{num:'02',title:'Commercial Projects',desc:'Offices, retail, and institutional buildings for impact.',fullDesc:'Nestox delivers commercial projects that make a statement.',imageUrl:'https://images.unsplash.com/photo-1486325212027-8081e485255e?w=800&q=80'},{num:'03',title:'Interior Design',desc:'Bespoke interiors — curated materials and spatial harmony.',fullDesc:'Our interior design team creates spaces that are as beautiful as they are functional.',imageUrl:'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=800&q=80'},{num:'04',title:'Renovation & Restoration',desc:'Breathing new life into existing structures.',fullDesc:'Our renovation team works sensitively, enhancing what works and transforming what does not.',imageUrl:'https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=800&q=80'},{num:'05',title:'Turnkey Contracting',desc:'End-to-end delivery — drawings to handing over keys.',fullDesc:'Our turnkey service covers every aspect from design consultations to final handover.',imageUrl:'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=800&q=80'},{num:'06',title:'MEP & Infrastructure',desc:'Mechanical, electrical, plumbing systems for longevity.',fullDesc:'Our MEP division engineers and installs systems that are efficient, reliable, and built to last.',imageUrl:'https://images.unsplash.com/photo-1581094794329-c8112a89af12?w=800&q=80'}],
+  projects:[{id:'p1',name:'Nestox The Grand Palms',tag:'Residential · Trivandrum',location:'Kowdiar, Kerala — 2023',type:'residential',imageUrl:'https://images.unsplash.com/photo-1613977257363-707ba9348227?w=1200&q=80',large:true,desc:'A landmark residential development featuring 48 premium apartments.'},{id:'p2',name:'Vertex Business Hub',tag:'Commercial · Dubai',location:'DIFC, Dubai — 2022',type:'commercial',imageUrl:'https://images.unsplash.com/photo-1486325212027-8081e485255e?w=800&q=80',large:false,desc:'A 12-storey commercial tower in Dubai\'s financial district.'},{id:'p3',name:'Aurum Penthouse',tag:'Interior · Kochi',location:'Marine Drive, Kochi — 2023',type:'interior',imageUrl:'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=800&q=80',large:false,desc:'A 4,200 sq ft penthouse transformation.'},{id:'p4',name:'Serenity Villa',tag:'Residential · Abu Dhabi',location:'Al Raha Beach — 2024',type:'residential',imageUrl:'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&q=80',large:false,desc:'A private waterfront villa with 25-metre lap pool.'},{id:'p5',name:'The Chronicle Tower',tag:'Commercial · Riyadh',location:'KAFD, Riyadh — 2024',type:'commercial',imageUrl:'https://images.unsplash.com/photo-1497366216548-37526070297c?w=1200&q=80',large:true,desc:'A signature mixed-use tower in the King Abdullah Financial District.'}],
+  testimonials:[{initial:'R',name:'Rajesh Menon',role:'Villa Client · Trivandrum, 2023',text:'Working with Nestox was the single best decision we made.'},{initial:'F',name:'Faris Al Mansoori',role:'Commercial Client · Dubai, 2022',text:'The attention to detail was extraordinary.'},{initial:'P',name:'Priya Chandran',role:'Interior Client · Kochi, 2023',text:'Nestox managed everything flawlessly.'},{initial:'K',name:'Khalid Saeed',role:'Commercial Client · Riyadh, 2024',text:"Nestox stands apart in professionalism and quality."}],
+  contact:{address:'TC 45/2196, Near Technopark,\nKazhakkoottam, Trivandrum — 695582',phone1:'+91 98475 00000',phone2:'+971 4 000 0000 (UAE)',phone3:'+966 11 000 0000 (KSA)',email:'hello@nestoxbuilders.com',hours:'Mon – Sat: 9:00 AM – 6:00 PM',whatsapp:'+919847500000',mapEmbed:'',officeKerala:'Trivandrum, Kerala',officeDubai:'Dubai, UAE',officeRiyadh:'Riyadh, KSA'},
   footer:{tagline:'Crafting premium spaces across India and the Gulf since 2006.',certifications:'RERA Registered · ISO 9001:2015 · CIDC Certified',copyright:'© 2025 Nestox Builders Pvt. Ltd. All rights reserved.',social:{linkedin:'#',instagram:'#',facebook:'#',youtube:'#'}},
-  blogs:[],pages:[],
-  nav:{links:[{label:'About',href:'#about'},{label:'Services',href:'#services'},{label:'Projects',href:'#projects'},{label:'Process',href:'#process'},{label:'Blog',href:'#blog'}],ctaLabel:'Enquire Now',ctaHref:'#contact'},
-  process:[
-    {num:'01',title:'Discovery',desc:'We meet, listen, and understand your vision, timeline, and investment capacity.'},
-    {num:'02',title:'Design',desc:'Architects translate your brief into a detailed design proposal for your review.'},
-    {num:'03',title:'Construction',desc:'Our expert crew breaks ground with finest materials, overseen by project managers.'},
-    {num:'04',title:'Handover',desc:'Walk into your completed space — quality-checked and ready to be called home.'},
-  ],
+  blogs:[],
+  process:[{num:'01',title:'Discovery',desc:'We meet, listen, and understand your vision.'},{num:'02',title:'Design',desc:'Architects translate your brief into a design proposal.'},{num:'03',title:'Construction',desc:'Our expert crew breaks ground with finest materials.'},{num:'04',title:'Handover',desc:'Walk into your completed space — ready to be called home.'}],
   marqueeItems:['Residential Villas','Luxury Apartments','Commercial Spaces','Interior Design','Turnkey Projects','Urban Developments'],
   settings:{showAbout:true,showServices:true,showProjects:true,showProcess:true,showTestimonials:true,showBlog:true,showContact:true},
 };
-function getD(){
-  try{
-    const r=localStorage.getItem(NESTOX_KEY);
-    if(!r) return JSON.parse(JSON.stringify(DEFAULT_DATA));
-    return deepMerge(JSON.parse(JSON.stringify(DEFAULT_DATA)),JSON.parse(r));
-  }catch(e){return JSON.parse(JSON.stringify(DEFAULT_DATA));}
-}
-function saveD(d){localStorage.setItem(NESTOX_KEY,JSON.stringify(d));}
-function deepMerge(t,s){
-  if(Array.isArray(s)) return s;
-  for(const k in s){
-    if(s[k]&&typeof s[k]==='object'&&!Array.isArray(s[k])){if(!t[k])t[k]={};deepMerge(t[k],s[k]);}
-    else{t[k]=s[k];}
-  }
-  return t;
-}
 
-// ─── AUTH ──────────────────────────────────────────────────────────────────────
+function getD(){try{const r=localStorage.getItem(KEY);return r?deepMerge(JSON.parse(JSON.stringify(DEFAULT)),JSON.parse(r)):JSON.parse(JSON.stringify(DEFAULT));}catch(e){return JSON.parse(JSON.stringify(DEFAULT));}}
+function saveD(d){localStorage.setItem(KEY,JSON.stringify(d));}
+function deepMerge(t,s){if(Array.isArray(s))return s;for(const k in s){if(s[k]&&typeof s[k]==='object'&&!Array.isArray(s[k])){if(!t[k])t[k]={};deepMerge(t[k],s[k]);}else t[k]=s[k];}return t;}
+
+const TITLES={dashboard:'Dashboard',home:'Home Page',about:'About Us',services:'Services',projects:'Projects',blog:'Blog',contact:'Contact',branding:'Branding',nav:'Navigation',footer:'Footer',testimonials:'Testimonials',visibility:'Visibility'};
+const LOADERS={dashboard:loadDash,home:loadHome,about:loadAbout,services:loadServices,projects:loadProjects,blog:loadBlog,contact:loadContact,branding:loadBranding,nav:loadNav,footer:loadFooter,testimonials:loadTesti,visibility:loadVis};
 let D;
-function init(){
-  if(sessionStorage.getItem('nx_admin')==='1'){showApp();}
-}
-function doLogin(){
-  const u=document.getElementById('lUser').value.trim();
-  const p=document.getElementById('lPass').value;
-  if(u===CREDS.user&&p===CREDS.pass){sessionStorage.setItem('nx_admin','1');showApp();}
-  else{document.getElementById('loginErr').style.display='block';}
-}
-function showApp(){
-  document.getElementById('loginScreen').classList.add('hide');
-  document.getElementById('adminApp').classList.add('show');
-  D=getD(); loadDashboard();
-}
-function doLogout(){
-  sessionStorage.removeItem('nx_admin');
-  document.getElementById('loginScreen').classList.remove('hide');
-  document.getElementById('adminApp').classList.remove('show');
-}
 
-// ─── ROUTING ───────────────────────────────────────────────────────────────────
-const TITLES={dashboard:'Dashboard',branding:'Branding & Logo',hero:'Hero Section',about:'About',services:'Services',projects:'Projects',process:'Build Process',testimonials:'Testimonials',contact:'Contact',footer:'Footer',blog:'Blog Posts',nav:'Navigation',pages:'Custom Pages',visibility:'Section Visibility'};
-const LOADERS={dashboard:loadDashboard,branding:loadBranding,hero:loadHero,about:loadAbout,services:loadServices,projects:loadProjects,process:loadProcess,testimonials:loadTestimonials,contact:loadContact,footer:loadFooter,blog:loadBlog,nav:loadNav,pages:loadPages,visibility:loadVisibility};
+function init(){if(sessionStorage.getItem('nx_adm')==='1'){showApp();}}
+function doLogin(){const u=g('lu').value.trim(),p=g('lp').value;if(u===CREDS.user&&p===CREDS.pass){sessionStorage.setItem('nx_adm','1');showApp();}else{g('lerr').style.display='block';}}
+function showApp(){g('ls').classList.add('hide');g('app').classList.add('show');D=getD();loadDash();}
+function doLogout(){sessionStorage.removeItem('nx_adm');g('ls').classList.remove('hide');g('app').classList.remove('show');}
 
-function showPanel(id){
+function sp(id){
   document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
-  document.querySelectorAll('.sb-item').forEach(i=>i.classList.remove('active'));
-  document.getElementById('panel-'+id).classList.add('active');
-  document.querySelector('[data-panel="'+id+'"]').classList.add('active');
-  document.getElementById('panelTitle').textContent=TITLES[id]||id;
-  D=getD();
-  if(LOADERS[id]) LOADERS[id]();
+  document.querySelectorAll('.sbi').forEach(i=>i.classList.remove('active'));
+  g('p-'+id).classList.add('active');
+  document.querySelector(`[data-p="${id}"]`).classList.add('active');
+  g('ptitle').textContent=TITLES[id]||id;
+  D=getD();if(LOADERS[id])LOADERS[id]();
 }
 
-// ─── DASHBOARD ─────────────────────────────────────────────────────────────────
-function loadDashboard(){
+function g(id){return document.getElementById(id);}
+function v(id){const e=g(id);return e?e.value:'';}
+function pv(inputId,prevId){const url=v(inputId);const el=g(prevId);if(!el)return;if(url){el.style.backgroundImage=`url('${url}')`;el.style.backgroundSize='cover';el.style.backgroundPosition='center';el.textContent='';}else{el.style.backgroundImage='none';el.textContent='Image preview';}}
+function cm(id){g(id).classList.remove('open');}
+function smsg(id){const m=g(id);if(!m)return;m.classList.add('show');setTimeout(()=>m.classList.remove('show'),2500);}
+let nt;
+function notify(msg,type=''){const n=g('notif');n.textContent=(type==='success'?'✓ ':'')+msg;n.className='notif show'+(type?' '+type:'');clearTimeout(nt);nt=setTimeout(()=>n.classList.remove('show'),3000);}
+function commit(sec){saveD(D);smsg('sm-'+sec);notify('Changes saved!','success');}
+function saveAll(){saveD(D);notify('All data saved!','success');}
+
+function loadDash(){
   D=getD();
-  document.getElementById('dashStats').innerHTML=[
+  g('dstats').innerHTML=[
+    {label:'Pages',value:6,sub:'Home, About, Services, Projects, Blog, Contact'},
     {label:'Projects',value:D.projects.length,sub:'In portfolio'},
+    {label:'Blog Posts',value:D.blogs.length,sub:D.blogs.length===0?'Blog page hidden':'Published'},
     {label:'Services',value:D.services.length,sub:'Active'},
-    {label:'Blog Posts',value:D.blogs.length,sub:D.blogs.length===0?'Blog hidden on site':'Published'},
-    {label:'Custom Pages',value:D.pages.length,sub:'Extra pages'},
-  ].map(s=>`<div class="dash-card"><div class="dc-label">${s.label}</div><div class="dc-value">${s.value}</div><div class="dc-sub">${s.sub}</div></div>`).join('');
-  const recent=D.blogs.slice(0,3);
-  document.getElementById('dashBlogList').innerHTML=recent.length===0
-    ?`<div style="background:var(--white);border:1px solid var(--border);padding:24px;text-align:center;color:var(--muted);font-size:.84rem;">No blog posts yet. <button class="btn btn-navy btn-sm" onclick="showPanel('blog')" style="margin-left:10px;">Create First Post →</button></div>`
-    :`<div class="tbl-wrap"><table><thead><tr><th>Title</th><th>Category</th><th>Date</th><th>Status</th></tr></thead><tbody>${recent.map(b=>`<tr><td>${b.title}</td><td>${b.category||'-'}</td><td>${b.date||'-'}</td><td><span class="badge badge-${b.status==='published'?'green':'blue'}">${b.status||'published'}</span></td></tr>`).join('')}</tbody></table></div>`;
+  ].map(s=>`<div class="dc"><div class="dc-lbl">${s.label}</div><div class="dc-val">${s.value}</div><div class="dc-sub">${s.sub}</div></div>`).join('');
+  g('pageLinks').innerHTML=[{l:'Home',h:'index.html'},{l:'About',h:'about.html'},{l:'Services',h:'services.html'},{l:'Projects',h:'projects.html'},{l:'Blog',h:'blog.html'},{l:'Contact',h:'contact.html'}].map(p=>`<a href="${p.h}" target="_blank" class="page-link-badge">↗ ${p.l}</a>`).join('');
+  const r=D.blogs.slice(0,3);
+  g('dblogs').innerHTML=r.length===0
+    ?`<div style="background:var(--white);border:1px solid var(--border);padding:24px;text-align:center;color:var(--muted);font-size:.82rem;">No blog posts yet. <button class="btn bn bsm" onclick="sp('blog')" style="margin-left:10px;">Create First Post →</button></div>`
+    :`<div class="tblw"><table><thead><tr><th>Title</th><th>Category</th><th>Date</th><th>Status</th></tr></thead><tbody>${r.map(b=>`<tr><td>${b.title}</td><td>${b.category||'-'}</td><td>${b.date||'-'}</td><td><span class="bdg bdg-${b.status==='published'?'g':'b'}">${b.status||'published'}</span></td></tr>`).join('')}</tbody></table></div>`;
 }
 
-// ─── BRANDING ──────────────────────────────────────────────────────────────────
-function loadBranding(){
-  g('brand_logoText').value=D.brand.logoText;
-  g('brand_tagline').value=D.brand.tagline;
-  g('brand_logoUrl').value=D.brand.logoUrl;
-  g('brand_favicon').value=D.brand.favicon;
-  if(D.brand.logoUrl) setPrev('brandPrev',D.brand.logoUrl);
+function loadHome(){
+  const h=D.hero;
+  g('h_eye').value=h.eyebrow||'';g('h_t1').value=h.title||'';g('h_t2').value=h.titleItalic||'';g('h_t3').value=h.titleEnd||'';
+  g('h_desc').value=h.desc||'';g('h_b1').value=h.btn1||'';g('h_b1h').value=h.btn1href||'';g('h_b2').value=h.btn2||'';
+  g('h_img').value=h.imageUrl||'';if(h.imageUrl)pv('h_img','h_imgp');
+  g('hstats').innerHTML=h.stats.map((s,i)=>`<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;background:var(--white);padding:10px;border:1px solid var(--border);margin-bottom:8px;">
+    <div class="fld" style="margin:0;"><label>Stat ${i+1}</label><input id="hs_n_${i}" value="${s.num}"></div>
+    <div class="fld" style="margin:0;"><label>Label</label><input id="hs_l_${i}" value="${s.label}"></div>
+  </div>`).join('');
 }
-function saveBranding(){
-  D.brand.logoText=v('brand_logoText'); D.brand.tagline=v('brand_tagline');
-  D.brand.logoUrl=v('brand_logoUrl'); D.brand.favicon=v('brand_favicon');
-  commit('branding');
-}
-
-// ─── HERO ──────────────────────────────────────────────────────────────────────
-function loadHero(){
-  ['eyebrow','title','titleItalic','titleEnd','description','btnPrimary','btnGhost','imageUrl'].forEach(k=>g('hero_'+k).value=D.hero[k]||'');
-  setPrev('heroPrev',D.hero.imageUrl);
-  g('heroStats').innerHTML=D.hero.stats.map((s,i)=>`
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;background:var(--white);padding:10px;border:1px solid var(--border);margin-bottom:8px;">
-      <div class="fld" style="margin:0;"><label>Stat ${i+1} Number</label><input id="hs_num_${i}" value="${s.num}"></div>
-      <div class="fld" style="margin:0;"><label>Label</label><input id="hs_lbl_${i}" value="${s.label}"></div>
-    </div>`).join('');
-}
-function saveHero(){
-  ['eyebrow','title','titleItalic','titleEnd','description','btnPrimary','btnGhost','imageUrl'].forEach(k=>D.hero[k]=v('hero_'+k));
-  D.hero.stats=D.hero.stats.map((_,i)=>({num:v('hs_num_'+i),label:v('hs_lbl_'+i)}));
-  commit('hero');
+function saveHome(){
+  D.hero={eyebrow:v('h_eye'),title:v('h_t1'),titleItalic:v('h_t2'),titleEnd:v('h_t3'),desc:v('h_desc'),btn1:v('h_b1'),btn1href:v('h_b1h'),btn2:v('h_b2'),btn2href:D.hero.btn2href||'about.html',imageUrl:v('h_img'),stats:D.hero.stats.map((_,i)=>({num:v('hs_n_'+i),label:v('hs_l_'+i)}))};
+  commit('home');
 }
 
-// ─── ABOUT ─────────────────────────────────────────────────────────────────────
 function loadAbout(){
-  ['eyebrow','title','titleItalic','titleEnd','body1','body2','established','imageUrl'].forEach(k=>g('about_'+k).value=D.about[k]||'');
-  setPrev('aboutPrev',D.about.imageUrl);
-  g('aboutPillars').innerHTML=D.about.pillars.map((p,i)=>`
-    <div style="background:var(--white);padding:10px;border:1px solid var(--border);margin-bottom:8px;">
-      <div style="display:grid;grid-template-columns:56px 1fr;gap:8px;margin-bottom:6px;">
-        <div class="fld" style="margin:0;"><label>Icon</label><input id="pill_icon_${i}" value="${p.icon}"></div>
-        <div class="fld" style="margin:0;"><label>Title</label><input id="pill_title_${i}" value="${p.title}"></div>
-      </div>
-      <div class="fld" style="margin:0;"><label>Description</label><input id="pill_desc_${i}" value="${p.desc}"></div>
-    </div>`).join('');
+  const a=D.about;
+  g('ab_eye').value=a.eyebrow||'';g('ab_t1').value=a.title||'';g('ab_ti').value=a.titleItalic||'';g('ab_t3').value=a.titleEnd||'';
+  g('ab_b1').value=a.body1||'';g('ab_full').value=a.fullBody||'';g('ab_est').value=a.established||'';
+  g('ab_img').value=a.imageUrl||'';if(a.imageUrl)pv('ab_img','ab_imgp');
+  g('pillars').innerHTML=a.pillars.map((p,i)=>`<div style="background:var(--white);padding:10px;border:1px solid var(--border);margin-bottom:8px;">
+    <div style="display:grid;grid-template-columns:52px 1fr;gap:8px;margin-bottom:6px;">
+      <div class="fld" style="margin:0;"><label>Icon</label><input id="pl_ic_${i}" value="${p.icon}"></div>
+      <div class="fld" style="margin:0;"><label>Title</label><input id="pl_ti_${i}" value="${p.title}"></div>
+    </div>
+    <div class="fld" style="margin:0;"><label>Description</label><input id="pl_de_${i}" value="${p.desc}"></div>
+  </div>`).join('');
 }
 function saveAbout(){
-  ['eyebrow','title','titleItalic','titleEnd','body1','body2','established','imageUrl'].forEach(k=>D.about[k]=v('about_'+k));
-  D.about.pillars=D.about.pillars.map((_,i)=>({icon:v('pill_icon_'+i),title:v('pill_title_'+i),desc:v('pill_desc_'+i)}));
+  D.about={eyebrow:v('ab_eye'),title:v('ab_t1'),titleItalic:v('ab_ti'),titleEnd:v('ab_t3'),body1:v('ab_b1'),body2:D.about.body2,fullBody:v('ab_full'),established:v('ab_est'),imageUrl:v('ab_img'),pillars:D.about.pillars.map((_,i)=>({icon:v('pl_ic_'+i),title:v('pl_ti_'+i),desc:v('pl_de_'+i)}))};
   commit('about');
 }
 
-// ─── SERVICES ──────────────────────────────────────────────────────────────────
-function loadServices(){renderServicesList();}
-function renderServicesList(){
-  g('servicesList').innerHTML=D.services.map((s,i)=>`
-    <div class="card-item">
-      <div class="card-item-info">
-        <div style="display:grid;grid-template-columns:60px 1fr;gap:10px;margin-bottom:8px;">
-          <div class="fld" style="margin:0;"><label>No.</label><input id="svc_num_${i}" value="${s.num}" style="font-size:.82rem;padding:7px 9px;"></div>
-          <div class="fld" style="margin:0;"><label>Title</label><input id="svc_title_${i}" value="${s.title}" style="font-size:.84rem;"></div>
-        </div>
-        <div class="fld" style="margin:0;"><label>Description</label><textarea id="svc_desc_${i}" style="min-height:56px;font-size:.81rem;">${s.desc}</textarea></div>
-      </div>
-      <div class="card-item-actions"><button class="btn btn-danger btn-sm" onclick="removeService(${i})">✕</button></div>
-    </div>`).join('');
+function loadServices(){
+  g('svcList').innerHTML=D.services.map((s,i)=>`<div class="ci">
+    <div class="ci-img" style="background-image:url('${s.imageUrl||''}')"></div>
+    <div class="ci-info"><div class="ci-title">${s.num}. ${s.title}</div><div class="ci-meta">${s.desc}</div></div>
+    <div class="ci-acts"><button class="btn bo bsm" onclick="openSvcMo(${i})">Edit</button><button class="btn bd bsm" onclick="rmSvc(${i})">✕</button></div>
+  </div>`).join('');
 }
-function addService(){D.services.push({num:String(D.services.length+1).padStart(2,'0'),title:'New Service',desc:'Service description...'});renderServicesList();}
-function removeService(i){D.services.splice(i,1);renderServicesList();}
-function saveServices(){D.services=D.services.map((_,i)=>({num:v('svc_num_'+i),title:v('svc_title_'+i),desc:v('svc_desc_'+i)}));commit('services');}
+function addSvc(){D.services.push({num:String(D.services.length+1).padStart(2,'0'),title:'New Service',desc:'Short description.',fullDesc:'Full description for the Services page.',imageUrl:''});loadServices();}
+function rmSvc(i){if(confirm('Remove?')){D.services.splice(i,1);loadServices();}}
+function openSvcMo(idx){
+  const s=D.services[idx];g('smt').textContent='Edit Service';g('sm_idx').value=idx;
+  g('sm_num').value=s.num;g('sm_title').value=s.title;g('sm_desc').value=s.desc;g('sm_full').value=s.fullDesc||'';g('sm_img').value=s.imageUrl||'';
+  if(s.imageUrl)pv('sm_img','sm_imgp');g('svcMo').classList.add('open');
+}
+function saveSvcItem(){const i=v('sm_idx');D.services[i]={num:v('sm_num'),title:v('sm_title'),desc:v('sm_desc'),fullDesc:v('sm_full'),imageUrl:v('sm_img')};saveD(D);loadServices();cm('svcMo');notify('Service saved!','success');}
+function saveSvc(){saveD(D);smsg('sm-services');notify('Services saved!','success');}
 
-// ─── PROJECTS ──────────────────────────────────────────────────────────────────
-function loadProjects(){renderProjectsList();}
-function renderProjectsList(){
-  g('projectsList').innerHTML=D.projects.map((p,i)=>`
-    <div class="card-item">
-      <div class="card-item-img" style="background-image:url('${p.imageUrl}')"></div>
-      <div class="card-item-info">
-        <div class="card-item-title">${p.name}</div>
-        <div class="card-item-meta">${p.tag} · <span class="badge badge-${p.type==='residential'?'green':p.type==='commercial'?'blue':'gold'}">${p.type}</span>${p.large?' <span class="badge badge-gold">Large</span>':''}</div>
-      </div>
-      <div class="card-item-actions">
-        <button class="btn btn-outline btn-sm" onclick="openProjectModal(${i})">Edit</button>
-        <button class="btn btn-danger btn-sm" onclick="removeProject(${i})">✕</button>
-      </div>
-    </div>`).join('');
+function loadProjects(){
+  g('projList').innerHTML=D.projects.map((p,i)=>`<div class="ci">
+    <div class="ci-img" style="background-image:url('${p.imageUrl||''}')"></div>
+    <div class="ci-info"><div class="ci-title">${p.name}</div><div class="ci-meta">${p.tag} · <span class="bdg bdg-${p.type==='residential'?'g':'b'}">${p.type}</span>${p.large?' · Large':''}</div></div>
+    <div class="ci-acts"><button class="btn bo bsm" onclick="openProjMo(${i})">Edit</button><button class="btn bd bsm" onclick="rmProj(${i})">✕</button></div>
+  </div>`).join('');
 }
-function openProjectModal(idx){
-  if(idx!==undefined){
-    const p=D.projects[idx];
-    g('projModalTitle').textContent='Edit Project'; g('proj_id').value=idx;
-    g('proj_name').value=p.name; g('proj_tag').value=p.tag; g('proj_type').value=p.type;
-    g('proj_location').value=p.location; g('proj_imageUrl').value=p.imageUrl;
-    g('proj_large').value=p.large?'true':'false'; setPrev('projPrev',p.imageUrl);
-  } else {
-    g('projModalTitle').textContent='Add Project'; g('proj_id').value='';
-    ['proj_name','proj_tag','proj_location','proj_imageUrl'].forEach(id=>g(id).value='');
-    g('proj_type').value='residential'; g('proj_large').value='false';
-    setPrev('projPrev','');
-  }
-  g('projectModal').classList.add('open');
+function openProjMo(idx){
+  if(idx!==undefined){const p=D.projects[idx];g('pmt').textContent='Edit Project';g('pm_id').value=idx;g('pm_name').value=p.name;g('pm_tag').value=p.tag;g('pm_type').value=p.type;g('pm_loc').value=p.location;g('pm_desc').value=p.desc||'';g('pm_img').value=p.imageUrl||'';g('pm_large').value=p.large?'true':'false';if(p.imageUrl)pv('pm_img','pm_imgp');}
+  else{g('pmt').textContent='Add Project';g('pm_id').value='';['pm_name','pm_tag','pm_loc','pm_desc','pm_img'].forEach(id=>g(id).value='');g('pm_type').value='residential';g('pm_large').value='false';}
+  g('projMo').classList.add('open');
 }
-function saveProject(){
-  const idx=g('proj_id').value;
-  const proj={id:idx!==''?D.projects[idx].id:'p'+Date.now(),name:v('proj_name'),tag:v('proj_tag'),type:v('proj_type'),location:v('proj_location'),imageUrl:v('proj_imageUrl'),large:v('proj_large')==='true'};
-  if(idx!==''){D.projects[idx]=proj;}else{D.projects.push(proj);}
-  saveD(D); renderProjectsList(); closeModal('projectModal'); notify('Project saved!','success');
-}
-function removeProject(i){if(confirm('Remove this project?')){D.projects.splice(i,1);renderProjectsList();}}
-function saveNow(){saveD(D);showSaveMsg('sm-projects');notify('Saved!','success');}
+function saveProjItem(){const idx=v('pm_id');const proj={id:idx!==''?D.projects[idx].id:'p'+Date.now(),name:v('pm_name'),tag:v('pm_tag'),type:v('pm_type'),location:v('pm_loc'),desc:v('pm_desc'),imageUrl:v('pm_img'),large:v('pm_large')==='true'};
+  if(idx!=='')D.projects[idx]=proj;else D.projects.push(proj);
+  saveD(D);loadProjects();cm('projMo');notify('Project saved!','success');}
+function rmProj(i){if(confirm('Remove?')){D.projects.splice(i,1);loadProjects();}}
+function saveProj(){saveD(D);smsg('sm-projects');notify('Projects saved!','success');}
 
-// ─── PROCESS ───────────────────────────────────────────────────────────────────
-function loadProcess(){
-  g('processList').innerHTML=D.process.map((s,i)=>`
-    <div class="card-item">
-      <div class="card-item-info">
-        <div style="display:grid;grid-template-columns:60px 1fr;gap:10px;margin-bottom:8px;">
-          <div class="fld" style="margin:0;"><label>No.</label><input id="proc_num_${i}" value="${s.num}" style="font-size:.82rem;padding:7px 9px;"></div>
-          <div class="fld" style="margin:0;"><label>Title</label><input id="proc_title_${i}" value="${s.title}" style="font-size:.84rem;"></div>
-        </div>
-        <div class="fld" style="margin:0;"><label>Description</label><textarea id="proc_desc_${i}" style="min-height:50px;font-size:.81rem;">${s.desc}</textarea></div>
-      </div>
-    </div>`).join('');
-}
-function saveProcess(){D.process=D.process.map((_,i)=>({num:v('proc_num_'+i),title:v('proc_title_'+i),desc:v('proc_desc_'+i)}));commit('process');}
-
-// ─── TESTIMONIALS ──────────────────────────────────────────────────────────────
-function loadTestimonials(){renderTestiList();}
-function renderTestiList(){
-  g('testimonialsList').innerHTML=D.testimonials.map((t,i)=>`
-    <div class="card-item">
-      <div style="width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--gold);background:rgba(184,149,90,.12);flex-shrink:0;">${t.initial}</div>
-      <div class="card-item-info">
-        <div style="display:grid;grid-template-columns:50px 1fr 1fr;gap:8px;margin-bottom:7px;">
-          <div class="fld" style="margin:0;"><label>Init</label><input id="ti_init_${i}" value="${t.initial}" maxlength="1" style="font-size:.84rem;padding:7px;"></div>
-          <div class="fld" style="margin:0;"><label>Name</label><input id="ti_name_${i}" value="${t.name}" style="font-size:.84rem;"></div>
-          <div class="fld" style="margin:0;"><label>Role</label><input id="ti_role_${i}" value="${t.role}" style="font-size:.84rem;"></div>
-        </div>
-        <div class="fld" style="margin:0;"><label>Text</label><textarea id="ti_text_${i}" style="min-height:60px;font-size:.81rem;">${t.text}</textarea></div>
-      </div>
-      <div class="card-item-actions"><button class="btn btn-danger btn-sm" onclick="removeTestimonial(${i})">✕</button></div>
-    </div>`).join('');
-}
-function addTestimonial(){D.testimonials.push({initial:'A',name:'Client Name',role:'Project · Location, Year',text:'Write testimonial here...'});renderTestiList();}
-function removeTestimonial(i){D.testimonials.splice(i,1);renderTestiList();}
-function saveTestimonials(){D.testimonials=D.testimonials.map((_,i)=>({initial:v('ti_init_'+i),name:v('ti_name_'+i),role:v('ti_role_'+i),text:v('ti_text_'+i)}));commit('testimonials');}
-
-// ─── CONTACT ───────────────────────────────────────────────────────────────────
-function loadContact(){['address','phone1','phone2','email','hours'].forEach(k=>g('contact_'+k).value=D.contact[k]||'');}
-function saveContact(){['address','phone1','phone2','email','hours'].forEach(k=>D.contact[k]=v('contact_'+k));commit('contact');}
-
-// ─── FOOTER ────────────────────────────────────────────────────────────────────
-function loadFooter(){
-  g('footer_tagline').value=D.footer.tagline;
-  g('footer_copyright').value=D.footer.copyright;
-  g('footer_certifications').value=D.footer.certifications;
-  g('footer_linkedin').value=D.footer.social.linkedin;
-  g('footer_instagram').value=D.footer.social.instagram;
-  g('footer_facebook').value=D.footer.social.facebook;
-  g('footer_youtube').value=D.footer.social.youtube;
-}
-function saveFooter(){
-  D.footer.tagline=v('footer_tagline'); D.footer.copyright=v('footer_copyright'); D.footer.certifications=v('footer_certifications');
-  D.footer.social={linkedin:v('footer_linkedin'),instagram:v('footer_instagram'),facebook:v('footer_facebook'),youtube:v('footer_youtube')};
-  commit('footer');
-}
-
-// ─── BLOG ──────────────────────────────────────────────────────────────────────
 function loadBlog(){
   const cnt=D.blogs.length;
-  g('blogNote').textContent=cnt===0?'⚠ Blog hidden on site (no posts yet)':cnt+' post'+(cnt!==1?'s':'')+' — visible on website';
-  g('blogTbody').innerHTML=D.blogs.length===0
-    ?`<tr><td colspan="6" style="text-align:center;color:var(--muted);padding:28px;">No posts yet. Click "+ New Post" to get started.</td></tr>`
-    :D.blogs.map((b,i)=>`<tr>
-        <td><strong>${b.title}</strong></td><td>${b.category||'-'}</td><td>${b.author||'-'}</td><td>${b.date||'-'}</td>
-        <td><span class="badge badge-${b.status==='published'?'green':'blue'}">${b.status||'published'}</span></td>
-        <td><div style="display:flex;gap:6px;">
-          <button class="btn btn-outline btn-sm" onclick="openBlogModal(${i})">Edit</button>
-          <button class="btn btn-danger btn-sm" onclick="removeBlog(${i})">✕</button>
-        </div></td>
-      </tr>`).join('');
+  g('blogNote').textContent=cnt===0?'⚠ Blog page is hidden (no posts) — it will appear in nav once you add a post':cnt+' post'+(cnt!==1?'s':'')+' — Blog page visible in navigation';
+  g('blogtb').innerHTML=D.blogs.length===0
+    ?`<tr><td colspan="6" style="text-align:center;color:var(--muted);padding:28px;">No posts yet.</td></tr>`
+    :D.blogs.map((b,i)=>`<tr><td><strong>${b.title}</strong></td><td>${b.category||'-'}</td><td>${b.author||'-'}</td><td>${b.date||'-'}</td><td><span class="bdg bdg-${b.status==='published'?'g':'b'}">${b.status||'published'}</span></td>
+      <td><div style="display:flex;gap:6px;"><button class="btn bo bsm" onclick="openBlogMo(${i})">Edit</button><button class="btn bd bsm" onclick="rmBlog(${i})">✕</button></div></td></tr>`).join('');
 }
-function openBlogModal(idx){
-  if(idx!==undefined){
-    const b=D.blogs[idx];
-    g('blogModalTitle').textContent='Edit Post'; g('blog_id').value=idx;
-    g('blog_title').value=b.title; g('blog_category').value=b.category||''; g('blog_author').value=b.author||'';
-    g('blog_date').value=b.date||''; g('blog_status').value=b.status||'published';
-    g('blog_imageUrl').value=b.imageUrl||''; g('blog_excerpt').value=b.excerpt||''; g('blog_content').value=b.content||'';
-    setPrev('blogImgPrev',b.imageUrl||'');
-  } else {
-    g('blogModalTitle').textContent='New Blog Post'; g('blog_id').value='';
-    ['blog_title','blog_category','blog_author','blog_date','blog_imageUrl','blog_excerpt','blog_content'].forEach(id=>g(id).value='');
-    g('blog_status').value='published'; setPrev('blogImgPrev','');
-  }
-  g('blogModal').classList.add('open');
+function openBlogMo(idx){
+  if(idx!==undefined){const b=D.blogs[idx];g('bmt').textContent='Edit Post';g('bm_id').value=idx;g('bm_title').value=b.title;g('bm_cat').value=b.category||'';g('bm_author').value=b.author||'';g('bm_date').value=b.date||'';g('bm_status').value=b.status||'published';g('bm_img').value=b.imageUrl||'';g('bm_exc').value=b.excerpt||'';g('bm_content').value=b.content||'';if(b.imageUrl)pv('bm_img','bm_imgp');}
+  else{g('bmt').textContent='New Blog Post';g('bm_id').value='';['bm_title','bm_cat','bm_author','bm_date','bm_img','bm_exc','bm_content'].forEach(id=>g(id).value='');g('bm_status').value='published';}
+  g('blogMo').classList.add('open');
 }
-function saveBlogPost(){
-  const idx=g('blog_id').value;
-  const post={id:idx!==''?D.blogs[idx].id:'b'+Date.now(),title:v('blog_title'),category:v('blog_category'),author:v('blog_author'),date:v('blog_date'),status:v('blog_status'),imageUrl:v('blog_imageUrl'),excerpt:v('blog_excerpt'),content:v('blog_content')};
-  if(idx!==''){D.blogs[idx]=post;}else{D.blogs.push(post);}
-  saveD(D); loadBlog(); closeModal('blogModal'); notify('Blog post saved!','success');
-}
-function removeBlog(i){if(confirm('Delete this post?')){D.blogs.splice(i,1);saveD(D);loadBlog();notify('Post deleted.');}}
+function saveBlogItem(){const idx=v('bm_id');const post={id:idx!==''?D.blogs[idx].id:'b'+Date.now(),title:v('bm_title'),category:v('bm_cat'),author:v('bm_author'),date:v('bm_date'),status:v('bm_status'),imageUrl:v('bm_img'),excerpt:v('bm_exc'),content:v('bm_content')};
+  if(idx!=='')D.blogs[idx]=post;else D.blogs.push(post);
+  saveD(D);loadBlog();cm('blogMo');notify('Post saved!','success');}
+function rmBlog(i){if(confirm('Delete?')){D.blogs.splice(i,1);saveD(D);loadBlog();}}
 
-// ─── NAV ───────────────────────────────────────────────────────────────────────
-function loadNav(){g('nav_ctaLabel').value=D.nav.ctaLabel;g('nav_ctaHref').value=D.nav.ctaHref;renderNavList();}
-function renderNavList(){
-  g('navList').innerHTML=D.nav.links.map((l,i)=>`
-    <div class="card-item">
-      <div class="card-item-info" style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
-        <div class="fld" style="margin:0;"><label>Label</label><input id="nav_lbl_${i}" value="${l.label}" style="font-size:.84rem;"></div>
-        <div class="fld" style="margin:0;"><label>Link (href)</label><input id="nav_href_${i}" value="${l.href}" style="font-size:.84rem;"></div>
+function loadContact(){const c=D.contact;g('c_p1').value=c.phone1||'';g('c_p2').value=c.phone2||'';g('c_p3').value=c.phone3||'';g('c_em').value=c.email||'';g('c_wa').value=c.whatsapp||'';g('c_addr').value=c.address||'';g('c_dub').value=c.officeDubai||'';g('c_riy').value=c.officeRiyadh||'';g('c_hrs').value=c.hours||'';g('c_map').value=c.mapEmbed||'';}
+function saveContact(){D.contact={...D.contact,phone1:v('c_p1'),phone2:v('c_p2'),phone3:v('c_p3'),email:v('c_em'),whatsapp:v('c_wa'),address:v('c_addr'),officeDubai:v('c_dub'),officeRiyadh:v('c_riy'),hours:v('c_hrs'),mapEmbed:v('c_map')};commit('contact');}
+
+function loadBranding(){g('br_name').value=D.brand.logoText||'';g('br_tag').value=D.brand.tagline||'';g('br_logo').value=D.brand.logoUrl||'';if(D.brand.logoUrl)pv('br_logo','br_logop');}
+function saveBranding(){D.brand={logoText:v('br_name'),tagline:v('br_tag'),logoUrl:v('br_logo')};commit('branding');}
+
+function loadNav(){g('n_ctal').value=D.nav.ctaLabel||'';g('n_ctah').value=D.nav.ctaHref||'';
+  g('navList').innerHTML=D.nav.links.map((l,i)=>`<div class="ci"><div class="ci-info" style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+    <div class="fld" style="margin:0;"><label>Label</label><input id="nl_l_${i}" value="${l.label}" style="font-size:.83rem;"></div>
+    <div class="fld" style="margin:0;"><label>Link</label><input id="nl_h_${i}" value="${l.href}" style="font-size:.83rem;"></div>
+  </div><div class="ci-acts"><button class="btn bd bsm" onclick="rmNav(${i})">✕</button></div></div>`).join('');
+}
+function addNavLink(){D.nav.links.push({label:'New Page',href:'#'});loadNav();}
+function rmNav(i){D.nav.links.splice(i,1);loadNav();}
+function saveNav(){D.nav.links=D.nav.links.map((_,i)=>({label:v('nl_l_'+i),href:v('nl_h_'+i)}));D.nav.ctaLabel=v('n_ctal');D.nav.ctaHref=v('n_ctah');commit('nav');}
+
+function loadFooter(){const f=D.footer;g('f_tag').value=f.tagline||'';g('f_copy').value=f.copyright||'';g('f_cert').value=f.certifications||'';g('f_li').value=f.social.linkedin||'#';g('f_ig').value=f.social.instagram||'#';g('f_fb').value=f.social.facebook||'#';g('f_yt').value=f.social.youtube||'#';}
+function saveFooter(){D.footer={tagline:v('f_tag'),copyright:v('f_copy'),certifications:v('f_cert'),social:{linkedin:v('f_li'),instagram:v('f_ig'),facebook:v('f_fb'),youtube:v('f_yt')}};commit('footer');}
+
+function loadTesti(){
+  g('testiList').innerHTML=D.testimonials.map((t,i)=>`<div class="ci">
+    <div style="width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--gold);background:rgba(184,149,90,.12);flex-shrink:0;">${t.initial}</div>
+    <div class="ci-info">
+      <div style="display:grid;grid-template-columns:48px 1fr 1fr;gap:8px;margin-bottom:6px;">
+        <div class="fld" style="margin:0;"><label>Init</label><input id="ts_i_${i}" value="${t.initial}" maxlength="1" style="font-size:.83rem;padding:6px 8px;"></div>
+        <div class="fld" style="margin:0;"><label>Name</label><input id="ts_n_${i}" value="${t.name}" style="font-size:.83rem;"></div>
+        <div class="fld" style="margin:0;"><label>Role</label><input id="ts_r_${i}" value="${t.role}" style="font-size:.83rem;"></div>
       </div>
-      <div class="card-item-actions"><button class="btn btn-danger btn-sm" onclick="removeNavLink(${i})">✕</button></div>
-    </div>`).join('');
+      <div class="fld" style="margin:0;"><label>Testimonial Text</label><textarea id="ts_t_${i}" style="min-height:54px;font-size:.81rem;">${t.text}</textarea></div>
+    </div>
+    <div class="ci-acts"><button class="btn bd bsm" onclick="rmTesti(${i})">✕</button></div>
+  </div>`).join('');
 }
-function addNavLink(){D.nav.links.push({label:'New Link',href:'#'});renderNavList();}
-function removeNavLink(i){D.nav.links.splice(i,1);renderNavList();}
-function saveNav(){D.nav.links=D.nav.links.map((_,i)=>({label:v('nav_lbl_'+i),href:v('nav_href_'+i)}));D.nav.ctaLabel=v('nav_ctaLabel');D.nav.ctaHref=v('nav_ctaHref');commit('nav');}
+function addTesti(){D.testimonials.push({initial:'A',name:'Client Name',role:'Project · Location, Year',text:'Write testimonial here...'});loadTesti();}
+function rmTesti(i){D.testimonials.splice(i,1);loadTesti();}
+function saveTesti(){D.testimonials=D.testimonials.map((_,i)=>({initial:v('ts_i_'+i),name:v('ts_n_'+i),role:v('ts_r_'+i),text:v('ts_t_'+i)}));commit('testimonials');}
 
-// ─── PAGES ─────────────────────────────────────────────────────────────────────
-function loadPages(){renderPagesList();}
-function renderPagesList(){
-  const list=g('pagesList');
-  list.innerHTML=D.pages.length===0
-    ?`<div style="background:var(--white);border:1px solid var(--border);padding:28px;text-align:center;color:var(--muted);font-size:.83rem;">No custom pages yet. Pages appear at the bottom of the site and are linked from the footer.</div>`
-    :D.pages.map((p,i)=>`<div class="card-item">
-        <div class="card-item-info"><div class="card-item-title">${p.title}</div><div class="card-item-meta">Anchor: #page-${p.id}</div></div>
-        <div class="card-item-actions">
-          <button class="btn btn-outline btn-sm" onclick="openPageModal(${i})">Edit</button>
-          <button class="btn btn-danger btn-sm" onclick="removePage(${i})">✕</button>
-        </div>
-      </div>`).join('');
+function loadVis(){
+  const secs=[{k:'showAbout',l:'About Section (Homepage)',d:'About preview on homepage'},{k:'showServices',l:'Services Section (Homepage)',d:'Service cards on homepage'},{k:'showProjects',l:'Projects Section (Homepage)',d:'Project preview on homepage'},{k:'showProcess',l:'Process Section (Homepage)',d:'4-step process on homepage'},{k:'showTestimonials',l:'Testimonials (Homepage)',d:'Client reviews on homepage'},{k:'showBlog',l:'Blog Section (Homepage)',d:'Blog preview on homepage'},{k:'showContact',l:'Contact Section (Homepage)',d:'Contact info on homepage'}];
+  g('visToggles').innerHTML=secs.map(s=>`<div class="tg-row">
+    <div><div class="tg-t">${s.l}</div><div class="tg-d">${s.d}</div></div>
+    <label class="tog"><input type="checkbox" id="vt_${s.k}" ${D.settings[s.k]?'checked':''}><span class="tog-sl"></span></label>
+  </div>`).join('');
 }
-function openPageModal(idx){
-  if(idx!==undefined){const p=D.pages[idx];g('pageModalTitle').textContent='Edit Page';g('page_id').value=idx;g('page_title').value=p.title;g('page_eyebrow').value=p.eyebrow||'';g('page_content').value=p.content;}
-  else{g('pageModalTitle').textContent='New Page';g('page_id').value='';['page_title','page_eyebrow','page_content'].forEach(id=>g(id).value='');}
-  g('pageModal').classList.add('open');
-}
-function savePage(){
-  const idx=g('page_id').value;
-  const pg={id:idx!==''?D.pages[idx].id:'pg'+Date.now(),title:v('page_title'),eyebrow:v('page_eyebrow'),content:v('page_content')};
-  if(idx!==''){D.pages[idx]=pg;}else{D.pages.push(pg);}
-  saveD(D); renderPagesList(); closeModal('pageModal'); notify('Page saved!','success');
-}
-function removePage(i){if(confirm('Delete this page?')){D.pages.splice(i,1);saveD(D);renderPagesList();}}
-
-// ─── VISIBILITY ────────────────────────────────────────────────────────────────
-function loadVisibility(){
-  const sections=[
-    {key:'showAbout',label:'About Section',desc:'Company story and pillars'},
-    {key:'showServices',label:'Services Section',desc:'Service cards grid'},
-    {key:'showProjects',label:'Projects Section',desc:'Portfolio showcase'},
-    {key:'showProcess',label:'Process Section',desc:'4-step build process'},
-    {key:'showTestimonials',label:'Testimonials',desc:'Client reviews'},
-    {key:'showBlog',label:'Blog Section',desc:'Auto-hidden when 0 posts exist'},
-    {key:'showContact',label:'Contact Section',desc:'Enquiry form and contact info'},
-  ];
-  g('visibilityToggles').innerHTML=sections.map(s=>`
-    <div class="toggle-row">
-      <div><div class="toggle-title">${s.label}</div><div class="toggle-desc">${s.desc}</div></div>
-      <label class="toggle"><input type="checkbox" id="vis_${s.key}" ${D.settings[s.key]?'checked':''}><span class="toggle-slider"></span></label>
-    </div>`).join('');
-}
-function saveVisibility(){
-  ['showAbout','showServices','showProjects','showProcess','showTestimonials','showBlog','showContact'].forEach(k=>{D.settings[k]=g('vis_'+k).checked;});
-  commit('visibility');
-}
-
-// ─── UTILS ─────────────────────────────────────────────────────────────────────
-function g(id){return document.getElementById(id);}
-function v(id){const e=g(id);return e?e.value:'';}
-function prevImg(inputId,prevId){setPrev(prevId,v(inputId));}
-function setPrev(id,url){
-  const el=g(id); if(!el) return;
-  if(url){el.style.backgroundImage=`url('${url}')`;el.style.backgroundSize='cover';el.style.backgroundPosition='center';el.textContent='';}
-  else{el.style.backgroundImage='none';el.textContent='Image preview';}
-}
-function commit(section){saveD(D);showSaveMsg('sm-'+section);notify('Changes saved!','success');}
-function saveAll(){saveD(D);notify('All data saved!','success');}
-function showSaveMsg(id){const m=g(id);if(!m)return;m.classList.add('show');setTimeout(()=>m.classList.remove('show'),2500);}
-function closeModal(id){g(id).classList.remove('open');}
-let ntimer;
-function notify(msg,type=''){
-  const n=g('notif');
-  n.textContent=(type==='success'?'✓ ':'')+msg;
-  n.className='notif show'+(type?' '+type:'');
-  clearTimeout(ntimer); ntimer=setTimeout(()=>n.classList.remove('show'),3000);
-}
+function saveVis(){['showAbout','showServices','showProjects','showProcess','showTestimonials','showBlog','showContact'].forEach(k=>{D.settings[k]=g('vt_'+k).checked;});commit('visibility');}
 
 window.addEventListener('DOMContentLoaded',init);
 </script>

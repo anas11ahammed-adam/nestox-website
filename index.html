@@ -3,23 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Nestox Builders</title>
+<title>Nestox Builders — Crafting Premium Spaces</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-:root{
-  --navy:#0d1b3e;--navy2:#162347;
-  --gold:#b8955a;--gold2:#d4b07a;
-  --cream:#f5f2ec;--white:#ffffff;
-  --ink:#111111;--muted:#7a7670;
-  --border:rgba(184,149,90,.22);--nborder:rgba(255,255,255,.08);
-}
+:root{--navy:#0d1b3e;--gold:#b8955a;--gold2:#d4b07a;--cream:#f5f2ec;--white:#fff;--ink:#111;--muted:#7a7670;--border:rgba(184,149,90,.22);}
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
 html{scroll-behavior:smooth;}
 body{font-family:'DM Sans',sans-serif;background:var(--white);color:var(--ink);overflow-x:hidden;cursor:none;}
-
-/* CURSOR */
-.cursor{position:fixed;width:8px;height:8px;background:var(--gold);border-radius:50%;pointer-events:none;z-index:9999;mix-blend-mode:multiply;top:0;left:0;}
+.cursor{position:fixed;width:8px;height:8px;background:var(--gold);border-radius:50%;pointer-events:none;z-index:9999;mix-blend-mode:multiply;top:0;left:0;transition:transform .15s;}
 .cursor-ring{position:fixed;width:36px;height:36px;border:1px solid var(--gold);border-radius:50%;pointer-events:none;z-index:9998;top:0;left:0;transition:width .3s,height .3s;}
 
 /* NAV */
@@ -28,12 +20,13 @@ nav.scrolled{background:rgba(255,255,255,.97);backdrop-filter:blur(14px);padding
 .nav-logo{font-family:'Cormorant Garamond',serif;font-size:1.75rem;font-weight:600;letter-spacing:.04em;color:var(--ink);text-decoration:none;}
 .nav-logo span{color:var(--gold);}
 .nav-logo img{height:42px;object-fit:contain;}
-.nav-links{display:flex;gap:36px;list-style:none;}
+.nav-links{display:flex;gap:32px;list-style:none;}
 .nav-links a{font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink);text-decoration:none;position:relative;transition:color .3s;}
 .nav-links a::after{content:'';position:absolute;bottom:-3px;left:0;width:0;height:1px;background:var(--gold);transition:width .3s;}
-.nav-links a:hover::after{width:100%;}
-.nav-cta{font-size:.74rem;letter-spacing:.12em;text-transform:uppercase;color:var(--white);background:var(--navy);padding:12px 28px;text-decoration:none;transition:background .3s,transform .2s;}
-.nav-cta:hover{background:var(--gold);transform:translateY(-1px);}
+.nav-links a:hover::after,.nav-links a.active::after{width:100%;}
+.nav-links a.active{color:var(--gold);}
+.nav-cta{font-size:.74rem;letter-spacing:.12em;text-transform:uppercase;color:var(--white);background:var(--navy);padding:12px 28px;text-decoration:none;transition:background .3s;}
+.nav-cta:hover{background:var(--gold);}
 .nav-ham{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:4px;}
 .nav-ham span{width:24px;height:1.5px;background:var(--ink);display:block;transition:.3s;}
 
@@ -45,7 +38,7 @@ nav.scrolled{background:rgba(255,255,255,.97);backdrop-filter:blur(14px);padding
 .mob-menu a:hover{color:var(--gold);}
 
 /* HERO */
-.hero{height:100vh;display:grid;grid-template-columns:1fr 1fr;position:relative;overflow:hidden;background:var(--cream);}
+.hero{height:100vh;display:grid;grid-template-columns:1fr 1fr;overflow:hidden;background:var(--cream);}
 .hero-left{display:flex;flex-direction:column;justify-content:center;padding:120px 60px 80px;position:relative;z-index:2;}
 .hero-eyebrow{font-size:.72rem;letter-spacing:.25em;text-transform:uppercase;color:var(--gold);margin-bottom:24px;opacity:0;animation:fadeUp .8s .3s forwards;}
 .hero-title{font-family:'Cormorant Garamond',serif;font-size:clamp(3.2rem,5vw,5.5rem);font-weight:300;line-height:1.08;margin-bottom:32px;opacity:0;animation:fadeUp .8s .5s forwards;}
@@ -71,92 +64,91 @@ nav.scrolled{background:rgba(255,255,255,.97);backdrop-filter:blur(14px);padding
 .marquee-item{font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:300;color:rgba(255,255,255,.5);padding:0 28px;letter-spacing:.1em;flex-shrink:0;}
 .marquee-item .dot{color:var(--gold);margin:0 14px;}
 
-/* ABOUT */
-.about{display:grid;grid-template-columns:1fr 1fr;min-height:88vh;align-items:center;}
-.about-media{position:relative;height:100%;min-height:600px;}
+/* SHARED SECTION STYLES */
+.sec-eyebrow{font-size:.72rem;letter-spacing:.25em;text-transform:uppercase;color:var(--gold);margin-bottom:20px;display:flex;align-items:center;gap:16px;}
+.sec-eyebrow::before{content:'';width:36px;height:1px;background:var(--gold);}
+.sec-title{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,3.2vw,3.2rem);font-weight:300;line-height:1.15;margin-bottom:28px;letter-spacing:-.01em;}
+.sec-title em{font-style:italic;color:var(--gold);}
+.sec-body{font-size:.9rem;color:var(--muted);line-height:1.9;margin-bottom:20px;font-weight:300;}
+
+/* ABOUT PREVIEW */
+.about-prev{display:grid;grid-template-columns:1fr 1fr;min-height:80vh;align-items:center;}
+.about-media{position:relative;height:100%;min-height:560px;}
 .about-img{position:absolute;inset:0;background-size:cover;background-position:center;}
 .about-badge{position:absolute;bottom:60px;right:-40px;background:var(--white);padding:30px 36px;box-shadow:0 20px 60px rgba(0,0,0,.09);z-index:3;}
 .about-badge-num{font-family:'Cormorant Garamond',serif;font-size:3rem;font-weight:300;color:var(--gold);line-height:1;}
 .about-badge-text{font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-top:6px;}
 .about-content{padding:80px 80px 80px 90px;}
-.section-eyebrow{font-size:.72rem;letter-spacing:.25em;text-transform:uppercase;color:var(--gold);margin-bottom:20px;display:flex;align-items:center;gap:16px;}
-.section-eyebrow::before{content:'';width:36px;height:1px;background:var(--gold);}
-.section-title{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,3.2vw,3.2rem);font-weight:300;line-height:1.15;margin-bottom:28px;letter-spacing:-.01em;}
-.section-title em{font-style:italic;color:var(--gold);}
-.section-body{font-size:.9rem;color:var(--muted);line-height:1.9;margin-bottom:20px;font-weight:300;}
-.about-pillars{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);margin-top:48px;border:1px solid var(--border);}
-.pillar{background:var(--white);padding:26px 22px;transition:background .3s;}
+.pillars{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);margin-top:40px;border:1px solid var(--border);}
+.pillar{background:var(--white);padding:24px 20px;transition:background .3s;}
 .pillar:hover{background:var(--cream);}
-.pillar-icon{font-size:1.3rem;margin-bottom:10px;color:var(--gold);}
-.pillar-title{font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;font-weight:500;margin-bottom:6px;}
-.pillar-desc{font-size:.81rem;color:var(--muted);line-height:1.65;font-weight:300;}
+.pillar-icon{font-size:1.2rem;margin-bottom:8px;color:var(--gold);}
+.pillar-title{font-size:.76rem;letter-spacing:.1em;text-transform:uppercase;font-weight:500;margin-bottom:5px;}
+.pillar-desc{font-size:.79rem;color:var(--muted);line-height:1.65;font-weight:300;}
 
-/* SERVICES */
-.services{padding:120px 60px;background:var(--navy);position:relative;overflow:hidden;}
-.services::before{content:'NESTOX';position:absolute;font-family:'Cormorant Garamond',serif;font-size:22vw;font-weight:600;color:rgba(255,255,255,.025);bottom:-4vw;left:50%;transform:translateX(-50%);white-space:nowrap;pointer-events:none;}
-.services-header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:72px;}
-.services-header .section-eyebrow{color:var(--gold2);}
-.services-header .section-eyebrow::before{background:var(--gold2);}
-.services-header .section-title{color:var(--white);margin-bottom:0;}
-.services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(255,255,255,.06);}
-.service-card{background:var(--navy);padding:48px 40px;border:1px solid rgba(255,255,255,.06);cursor:pointer;position:relative;overflow:hidden;transition:border-color .4s;}
-.service-card::before{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:var(--gold);transform:scaleX(0);transition:transform .4s;transform-origin:left;}
-.service-card:hover::before{transform:scaleX(1);}
-.service-num{font-family:'Cormorant Garamond',serif;font-size:.95rem;color:var(--gold);margin-bottom:32px;opacity:.6;letter-spacing:.1em;}
-.service-title{font-family:'Cormorant Garamond',serif;font-size:1.65rem;font-weight:400;color:var(--white);margin-bottom:16px;line-height:1.2;transition:color .3s;}
-.service-card:hover .service-title{color:var(--gold2);}
-.service-desc{font-size:.82rem;color:rgba(255,255,255,.38);line-height:1.8;font-weight:300;margin-bottom:32px;}
-.service-arrow{color:var(--gold);font-size:1.1rem;transition:transform .3s;display:inline-block;}
-.service-card:hover .service-arrow{transform:translateX(8px);}
+/* SERVICES PREVIEW */
+.services-sec{padding:120px 60px;background:var(--navy);position:relative;overflow:hidden;}
+.services-sec::before{content:'NESTOX';position:absolute;font-family:'Cormorant Garamond',serif;font-size:22vw;font-weight:600;color:rgba(255,255,255,.025);bottom:-4vw;left:50%;transform:translateX(-50%);white-space:nowrap;pointer-events:none;}
+.svc-header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:64px;}
+.svc-header .sec-eyebrow{color:var(--gold2);}
+.svc-header .sec-eyebrow::before{background:var(--gold2);}
+.svc-header .sec-title{color:var(--white);margin-bottom:0;}
+.svc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(255,255,255,.06);}
+.svc-card{background:var(--navy);padding:44px 36px;border:1px solid rgba(255,255,255,.06);position:relative;overflow:hidden;transition:border-color .4s;cursor:pointer;text-decoration:none;display:block;}
+.svc-card::before{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:var(--gold);transform:scaleX(0);transition:transform .4s;transform-origin:left;}
+.svc-card:hover::before{transform:scaleX(1);}
+.svc-num{font-family:'Cormorant Garamond',serif;font-size:.9rem;color:var(--gold);margin-bottom:28px;opacity:.6;letter-spacing:.1em;}
+.svc-title{font-family:'Cormorant Garamond',serif;font-size:1.55rem;font-weight:400;color:var(--white);margin-bottom:14px;line-height:1.2;transition:color .3s;}
+.svc-card:hover .svc-title{color:var(--gold2);}
+.svc-desc{font-size:.8rem;color:rgba(255,255,255,.38);line-height:1.8;font-weight:300;margin-bottom:28px;}
+.svc-arrow{color:var(--gold);font-size:1rem;transition:transform .3s;display:inline-block;}
+.svc-card:hover .svc-arrow{transform:translateX(8px);}
 
-/* PROJECTS */
-.projects{padding:120px 60px;background:var(--white);}
-.projects-header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:56px;}
-.projects-tabs{display:flex;gap:8px;}
-.tab-btn{font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;padding:10px 20px;border:1px solid var(--border);background:transparent;cursor:pointer;transition:all .3s;font-family:'DM Sans',sans-serif;color:var(--muted);}
-.tab-btn.active,.tab-btn:hover{background:var(--navy);color:var(--white);border-color:var(--navy);}
-.projects-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
-.project-card{position:relative;overflow:hidden;cursor:pointer;aspect-ratio:4/5;}
-.project-card.large{grid-column:span 2;aspect-ratio:auto;min-height:440px;}
-.project-bg{width:100%;height:100%;background-size:cover;background-position:center;transition:transform .7s cubic-bezier(.25,.46,.45,.94);}
-.project-card:hover .project-bg{transform:scale(1.06);}
-.project-overlay{position:absolute;inset:0;background:linear-gradient(0deg,rgba(13,27,62,.88) 0%,transparent 55%);display:flex;flex-direction:column;justify-content:flex-end;padding:32px;opacity:0;transition:opacity .4s;}
-.project-card:hover .project-overlay{opacity:1;}
-.project-tag{font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;color:var(--gold2);margin-bottom:8px;}
-.project-name{font-family:'Cormorant Garamond',serif;font-size:1.65rem;font-weight:300;color:var(--white);margin-bottom:4px;}
-.project-location{font-size:.78rem;color:rgba(255,255,255,.5);font-weight:300;}
+/* PROJECTS PREVIEW */
+.projects-sec{padding:120px 60px;background:var(--white);}
+.proj-header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:56px;}
+.proj-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+.proj-card{position:relative;overflow:hidden;cursor:pointer;aspect-ratio:4/5;text-decoration:none;}
+.proj-card.large{grid-column:span 2;aspect-ratio:auto;min-height:440px;}
+.proj-bg{width:100%;height:100%;background-size:cover;background-position:center;transition:transform .7s cubic-bezier(.25,.46,.45,.94);}
+.proj-card:hover .proj-bg{transform:scale(1.06);}
+.proj-overlay{position:absolute;inset:0;background:linear-gradient(0deg,rgba(13,27,62,.88) 0%,transparent 55%);display:flex;flex-direction:column;justify-content:flex-end;padding:32px;opacity:0;transition:opacity .4s;}
+.proj-card:hover .proj-overlay{opacity:1;}
+.proj-tag{font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;color:var(--gold2);margin-bottom:8px;}
+.proj-name{font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:300;color:var(--white);margin-bottom:4px;}
+.proj-loc{font-size:.78rem;color:rgba(255,255,255,.5);font-weight:300;}
 
 /* PROCESS */
-.process{padding:120px 60px;background:var(--cream);}
+.process-sec{padding:120px 60px;background:var(--cream);}
 .process-header{text-align:center;max-width:600px;margin:0 auto 80px;}
-.process-header .section-eyebrow{justify-content:center;}
+.process-header .sec-eyebrow{justify-content:center;}
 .process-steps{display:grid;grid-template-columns:repeat(4,1fr);position:relative;}
 .process-steps::before{content:'';position:absolute;top:27px;left:12.5%;right:12.5%;height:1px;background:var(--border);}
 .process-step{text-align:center;padding:0 22px;}
 .step-dot{width:54px;height:54px;border-radius:50%;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;margin:0 auto 28px;background:var(--cream);position:relative;z-index:2;transition:all .3s;}
 .process-step:hover .step-dot{background:var(--gold);border-color:var(--gold);}
-.step-num{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:400;color:var(--gold);transition:color .3s;}
+.step-num{font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--gold);transition:color .3s;}
 .process-step:hover .step-num{color:var(--white);}
-.step-title{font-family:'Cormorant Garamond',serif;font-size:1.25rem;font-weight:400;margin-bottom:10px;}
-.step-desc{font-size:.8rem;color:var(--muted);line-height:1.7;font-weight:300;}
+.step-title{font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:400;margin-bottom:10px;}
+.step-desc{font-size:.79rem;color:var(--muted);line-height:1.7;font-weight:300;}
 
 /* TESTIMONIALS */
-.testimonials{padding:120px 60px;background:var(--white);}
+.testi-sec{padding:120px 60px;background:var(--white);}
 .testi-inner{max-width:1100px;margin:0 auto;}
 .testi-hdr{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:56px;}
-.testimonials-grid{display:grid;grid-template-columns:1fr 1fr;gap:28px;}
-.testimonial-card{background:var(--cream);padding:44px;border:1px solid var(--border);transition:transform .3s,box-shadow .3s;}
-.testimonial-card:hover{transform:translateY(-5px);box-shadow:0 20px 52px rgba(0,0,0,.07);}
+.testi-grid{display:grid;grid-template-columns:1fr 1fr;gap:28px;}
+.testi-card{background:var(--cream);padding:44px;border:1px solid var(--border);transition:transform .3s,box-shadow .3s;}
+.testi-card:hover{transform:translateY(-5px);box-shadow:0 20px 52px rgba(0,0,0,.07);}
 .testi-quote{font-family:'Cormorant Garamond',serif;font-size:3.6rem;color:var(--gold);line-height:.5;margin-bottom:24px;opacity:.45;}
-.testi-text{font-family:'Cormorant Garamond',serif;font-size:1.15rem;font-weight:300;font-style:italic;line-height:1.7;color:var(--ink);margin-bottom:28px;}
+.testi-text{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:300;font-style:italic;line-height:1.7;color:var(--ink);margin-bottom:28px;}
 .testi-author{display:flex;align-items:center;gap:14px;padding-top:22px;border-top:1px solid var(--border);}
 .author-av{width:46px;height:46px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:1.2rem;color:var(--gold);background:rgba(184,149,90,.12);flex-shrink:0;}
-.author-name{font-size:.83rem;font-weight:500;letter-spacing:.04em;}
-.author-role{font-size:.7rem;color:var(--muted);margin-top:2px;letter-spacing:.06em;}
-.stars{color:var(--gold);font-size:.78rem;margin-bottom:6px;letter-spacing:2px;}
+.author-name{font-size:.83rem;font-weight:500;}
+.author-role{font-size:.7rem;color:var(--muted);margin-top:2px;}
+.stars{color:var(--gold);font-size:.76rem;margin-bottom:6px;letter-spacing:2px;}
 
 /* BLOG */
-.blog{padding:120px 60px;background:var(--cream);}
+.blog-sec{padding:120px 60px;background:var(--cream);}
 .blog-header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:56px;}
 .blog-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;}
 .blog-card{background:var(--white);border:1px solid var(--border);overflow:hidden;cursor:pointer;transition:transform .3s,box-shadow .3s;}
@@ -164,48 +156,57 @@ nav.scrolled{background:rgba(255,255,255,.97);backdrop-filter:blur(14px);padding
 .blog-img{width:100%;height:220px;background-size:cover;background-position:center;background-color:var(--cream);}
 .blog-body{padding:28px;}
 .blog-tag{font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin-bottom:10px;}
-.blog-title{font-family:'Cormorant Garamond',serif;font-size:1.35rem;font-weight:400;line-height:1.3;margin-bottom:12px;}
-.blog-excerpt{font-size:.82rem;color:var(--muted);line-height:1.75;font-weight:300;margin-bottom:20px;}
-.blog-meta{font-size:.7rem;color:var(--muted);letter-spacing:.06em;display:flex;gap:16px;margin-bottom:16px;}
-.blog-read-more{font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--navy);border:none;border-bottom:1px solid var(--navy);padding-bottom:2px;cursor:pointer;background:none;font-family:'DM Sans',sans-serif;transition:color .3s,border-color .3s;}
-.blog-read-more:hover{color:var(--gold);border-color:var(--gold);}
+.blog-title{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:400;line-height:1.3;margin-bottom:12px;}
+.blog-excerpt{font-size:.8rem;color:var(--muted);line-height:1.75;font-weight:300;margin-bottom:16px;}
+.blog-meta{font-size:.7rem;color:var(--muted);margin-bottom:14px;}
+.blog-rm{font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--navy);border:none;border-bottom:1px solid var(--navy);padding-bottom:2px;cursor:pointer;background:none;font-family:'DM Sans',sans-serif;transition:color .3s,border-color .3s;}
+.blog-rm:hover{color:var(--gold);border-color:var(--gold);}
 
 /* BLOG MODAL */
 .blog-modal{display:none;position:fixed;inset:0;z-index:500;background:rgba(13,27,62,.5);backdrop-filter:blur(6px);align-items:center;justify-content:center;padding:24px;}
 .blog-modal.open{display:flex;}
-.blog-modal-inner{background:var(--white);max-width:780px;width:100%;max-height:90vh;overflow-y:auto;padding:56px;}
-.bm-close-btn{display:block;margin-bottom:24px;background:var(--navy);color:var(--white);border:none;padding:9px 20px;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;}
-.bm-img{width:100%;height:320px;background-size:cover;background-position:center;margin-bottom:32px;}
+.bm-inner{background:var(--white);max-width:780px;width:100%;max-height:90vh;overflow-y:auto;padding:56px;}
+.bm-close{display:block;margin-bottom:24px;background:var(--navy);color:var(--white);border:none;padding:9px 20px;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:.76rem;letter-spacing:.1em;text-transform:uppercase;}
+.bm-img{width:100%;height:300px;background-size:cover;background-position:center;margin-bottom:32px;}
 .bm-tag{font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:12px;}
 .bm-title{font-family:'Cormorant Garamond',serif;font-size:2.4rem;font-weight:300;line-height:1.2;margin-bottom:16px;}
 .bm-meta{font-size:.75rem;color:var(--muted);margin-bottom:32px;padding-bottom:24px;border-bottom:1px solid var(--border);}
-.bm-content{font-size:.92rem;line-height:1.9;color:var(--ink);font-weight:300;white-space:pre-wrap;}
+.bm-content{font-size:.9rem;line-height:1.9;color:var(--ink);font-weight:300;white-space:pre-wrap;}
 
-/* CONTACT */
-.contact{display:grid;grid-template-columns:1fr 1fr;min-height:80vh;}
-.contact-left{background:var(--navy);padding:100px 72px;display:flex;flex-direction:column;justify-content:center;}
-.contact-left .section-eyebrow{color:var(--gold2);}
-.contact-left .section-eyebrow::before{background:var(--gold2);}
-.contact-left .section-title{color:var(--white);}
-.contact-left .section-body{color:rgba(255,255,255,.42);}
-.contact-info{margin-top:44px;display:flex;flex-direction:column;gap:24px;}
-.contact-item{display:flex;gap:18px;align-items:flex-start;}
-.contact-icon{width:42px;height:42px;border:1px solid rgba(255,255,255,.12);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:.95rem;}
-.contact-item-label{font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:4px;}
-.contact-item-text{font-size:.82rem;color:rgba(255,255,255,.48);line-height:1.7;font-weight:300;}
-.contact-right{background:var(--cream);padding:100px 72px;display:flex;flex-direction:column;justify-content:center;}
-.contact-form{display:flex;flex-direction:column;gap:18px;margin-top:32px;}
-.form-row{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
-.form-group{display:flex;flex-direction:column;gap:7px;}
-.form-label{font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:500;}
-.form-input,.form-select,.form-textarea{background:var(--white);border:1px solid var(--border);padding:13px 16px;font-family:'DM Sans',sans-serif;font-size:.87rem;color:var(--ink);outline:none;transition:border-color .3s;font-weight:300;appearance:none;-webkit-appearance:none;}
-.form-input:focus,.form-select:focus,.form-textarea:focus{border-color:var(--gold);}
-.form-textarea{resize:vertical;min-height:110px;}
-.form-submit{font-size:.74rem;letter-spacing:.14em;text-transform:uppercase;color:var(--white);background:var(--navy);padding:16px 36px;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;transition:background .3s,transform .2s;align-self:flex-start;}
-.form-submit:hover{background:var(--gold);transform:translateY(-2px);}
+/* CONTACT SECTION — NO FORM */
+.contact-sec{background:var(--navy);}
+.contact-top{display:grid;grid-template-columns:1fr 1fr 1fr;min-height:60vh;}
+.contact-info-col{padding:80px 60px;border-right:1px solid rgba(255,255,255,.07);}
+.contact-info-col:last-child{border-right:none;}
+.contact-info-col .sec-eyebrow{color:var(--gold2);}
+.contact-info-col .sec-eyebrow::before{background:var(--gold2);}
+.contact-info-col .sec-title{color:var(--white);}
+.c-detail{margin-top:36px;display:flex;flex-direction:column;gap:28px;}
+.c-item{display:flex;gap:16px;align-items:flex-start;}
+.c-icon{width:44px;height:44px;border:1px solid rgba(255,255,255,.12);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:1rem;color:var(--gold);}
+.c-label{font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:5px;}
+.c-value{font-size:.84rem;color:rgba(255,255,255,.55);line-height:1.75;font-weight:300;}
+.c-value a{color:rgba(255,255,255,.55);text-decoration:none;transition:color .3s;}
+.c-value a:hover{color:var(--gold);}
+.contact-map{width:100%;height:380px;background:rgba(255,255,255,.04);border-top:1px solid rgba(255,255,255,.07);position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;}
+.contact-map iframe{width:100%;height:100%;border:none;filter:grayscale(30%) invert(90%) hue-rotate(180deg) brightness(0.85) contrast(1.1);}
+.contact-map-placeholder{text-align:center;color:rgba(255,255,255,.3);}
+.contact-map-placeholder .map-icon{font-size:3rem;margin-bottom:16px;display:block;}
+.contact-map-placeholder p{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:300;}
+.contact-cta-strip{background:var(--gold);padding:40px 60px;display:flex;align-items:center;justify-content:space-between;}
+.cta-strip-text{font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:300;color:var(--white);}
+.cta-strip-text em{font-style:italic;}
+.cta-strip-btns{display:flex;gap:16px;}
+.cta-btn-white{font-size:.74rem;letter-spacing:.14em;text-transform:uppercase;color:var(--navy);background:var(--white);padding:14px 32px;text-decoration:none;transition:all .3s;}
+.cta-btn-white:hover{background:var(--navy);color:var(--white);}
+.cta-btn-outline{font-size:.74rem;letter-spacing:.14em;text-transform:uppercase;color:var(--white);border:1px solid rgba(255,255,255,.5);padding:14px 32px;text-decoration:none;transition:all .3s;}
+.cta-btn-outline:hover{background:rgba(255,255,255,.15);}
+.whatsapp-float{position:fixed;bottom:32px;right:32px;z-index:100;width:56px;height:56px;background:#25d366;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(37,211,102,.4);text-decoration:none;transition:transform .3s,box-shadow .3s;}
+.whatsapp-float:hover{transform:scale(1.1);box-shadow:0 6px 28px rgba(37,211,102,.5);}
+.whatsapp-float svg{width:28px;height:28px;fill:white;}
 
 /* FOOTER */
-footer{background:var(--navy);padding:80px 60px 36px;}
+footer{background:var(--navy);padding:80px 60px 36px;border-top:1px solid rgba(255,255,255,.06);}
 .footer-top{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:56px;margin-bottom:60px;}
 .footer-logo{font-family:'Cormorant Garamond',serif;font-size:1.85rem;font-weight:600;color:var(--white);letter-spacing:.04em;margin-bottom:18px;display:block;text-decoration:none;}
 .footer-logo span{color:var(--gold);}
@@ -221,20 +222,12 @@ footer{background:var(--navy);padding:80px 60px 36px;}
 .footer-bottom{display:flex;justify-content:space-between;align-items:center;padding-top:28px;border-top:1px solid rgba(255,255,255,.06);}
 .footer-copy,.footer-reg{font-size:.73rem;color:rgba(255,255,255,.24);font-weight:300;}
 
-/* CUSTOM PAGE */
-.custom-page{padding:160px 60px 120px;min-height:80vh;}
-.custom-page-eyebrow{font-size:.72rem;letter-spacing:.25em;text-transform:uppercase;color:var(--gold);margin-bottom:20px;display:flex;align-items:center;gap:16px;}
-.custom-page-eyebrow::before{content:'';width:36px;height:1px;background:var(--gold);}
-.custom-page-title{font-family:'Cormorant Garamond',serif;font-size:clamp(2.5rem,5vw,4.5rem);font-weight:300;margin-bottom:32px;}
-.custom-page-content{font-size:.95rem;line-height:1.9;color:var(--muted);max-width:800px;white-space:pre-wrap;}
-
 /* REVEAL */
 .reveal{opacity:0;transform:translateY(36px);transition:opacity .8s,transform .8s;}
 .reveal.visible{opacity:1;transform:translateY(0);}
 .reveal-delay-1{transition-delay:.12s;}
 .reveal-delay-2{transition-delay:.24s;}
 .reveal-delay-3{transition-delay:.36s;}
-.reveal-delay-4{transition-delay:.48s;}
 
 @keyframes fadeUp{from{opacity:0;transform:translateY(28px);}to{opacity:1;transform:translateY(0);}}
 @keyframes zoomOut{from{transform:scale(1.08);}to{transform:scale(1);}}
@@ -243,28 +236,26 @@ footer{background:var(--navy);padding:80px 60px 36px;}
 /* RESPONSIVE */
 @media(max-width:1100px){
   .hero{grid-template-columns:1fr;}.hero-right{display:none;}.hero-left{padding:130px 40px 80px;}.hero-stats{left:40px;}
-  .about{grid-template-columns:1fr;}.about-media{min-height:400px;}.about-badge{right:20px;bottom:20px;}.about-content{padding:60px 40px;}
-  .services-grid{grid-template-columns:1fr 1fr;}.projects-grid{grid-template-columns:1fr 1fr;}.project-card.large{grid-column:span 2;}
-  .footer-top{grid-template-columns:1fr 1fr;gap:36px;}
+  .about-prev{grid-template-columns:1fr;}.about-media{min-height:400px;}.about-badge{right:20px;bottom:20px;}.about-content{padding:60px 40px;}
+  .svc-grid{grid-template-columns:1fr 1fr;}.proj-grid{grid-template-columns:1fr 1fr;}.proj-card.large{grid-column:span 2;}
+  .contact-top{grid-template-columns:1fr;}.footer-top{grid-template-columns:1fr 1fr;gap:36px;}
+  .process-steps{grid-template-columns:1fr 1fr;gap:36px;}.process-steps::before{display:none;}
 }
 @media(max-width:768px){
-  nav{padding:20px 24px;}nav.scrolled{padding:14px 24px;}
-  .nav-links,.nav-cta{display:none;}.nav-ham{display:flex;}
+  nav{padding:20px 24px;}nav.scrolled{padding:14px 24px;}.nav-links,.nav-cta{display:none;}.nav-ham{display:flex;}
   .hero-left{padding:120px 24px 100px;}.hero-stats{left:24px;gap:24px;flex-wrap:wrap;}
-  .services{padding:80px 24px;}.services-grid{grid-template-columns:1fr;}.services-header{flex-direction:column;align-items:flex-start;gap:20px;}
-  .projects{padding:80px 24px;}.projects-grid{grid-template-columns:1fr;}.project-card.large{grid-column:span 1;}.projects-header{flex-direction:column;align-items:flex-start;gap:20px;}
-  .process{padding:80px 24px;}.process-steps{grid-template-columns:1fr 1fr;gap:36px;}.process-steps::before{display:none;}
-  .testimonials{padding:80px 24px;}.testimonials-grid{grid-template-columns:1fr;}.testi-hdr{flex-direction:column;align-items:flex-start;gap:16px;}
-  .blog{padding:80px 24px;}.blog-grid{grid-template-columns:1fr;}.blog-header{flex-direction:column;align-items:flex-start;gap:16px;}
-  .contact{grid-template-columns:1fr;}.contact-left,.contact-right{padding:60px 24px;}.form-row{grid-template-columns:1fr;}
+  .services-sec{padding:80px 24px;}.svc-grid{grid-template-columns:1fr;}.svc-header{flex-direction:column;align-items:flex-start;gap:20px;}
+  .projects-sec{padding:80px 24px;}.proj-grid{grid-template-columns:1fr;}.proj-card.large{grid-column:span 1;}.proj-header{flex-direction:column;align-items:flex-start;gap:20px;}
+  .process-sec{padding:80px 24px;}.process-steps{grid-template-columns:1fr 1fr;}
+  .testi-sec{padding:80px 24px;}.testi-grid{grid-template-columns:1fr;}.testi-hdr{flex-direction:column;align-items:flex-start;gap:16px;}
+  .blog-sec{padding:80px 24px;}.blog-grid{grid-template-columns:1fr;}.blog-header{flex-direction:column;align-items:flex-start;gap:16px;}
+  .contact-info-col{padding:48px 24px;}.contact-cta-strip{flex-direction:column;gap:20px;padding:32px 24px;}.cta-strip-btns{flex-direction:column;width:100%;}
   footer{padding:60px 24px 28px;}.footer-top{grid-template-columns:1fr;gap:28px;}.footer-bottom{flex-direction:column;gap:10px;text-align:center;}
-  .about-content{padding:60px 24px;}.blog-modal-inner{padding:32px 24px;}.custom-page{padding:120px 24px 80px;}
+  .about-content{padding:60px 24px;}.bm-inner{padding:32px 24px;}
 }
 </style>
 </head>
 <body>
-
-<!-- CURSOR -->
 <div class="cursor" id="cursor"></div>
 <div class="cursor-ring" id="cursorRing"></div>
 
@@ -276,8 +267,8 @@ footer{background:var(--navy);padding:80px 60px 36px;}
 
 <!-- BLOG MODAL -->
 <div class="blog-modal" id="blogModal">
-  <div class="blog-modal-inner">
-    <button class="bm-close-btn" onclick="closeBlogModal()">✕ Close</button>
+  <div class="bm-inner">
+    <button class="bm-close" onclick="closeBM()">✕ Close</button>
     <div class="bm-img" id="bmImg"></div>
     <div class="bm-tag" id="bmTag"></div>
     <h2 class="bm-title" id="bmTitle"></h2>
@@ -288,172 +279,74 @@ footer{background:var(--navy);padding:80px 60px 36px;}
 
 <!-- NAV -->
 <nav id="navbar">
-  <a href="#" class="nav-logo" id="navLogo"></a>
+  <a href="index.html" class="nav-logo" id="navLogo"></a>
   <ul class="nav-links" id="navLinks"></ul>
-  <a href="#contact" class="nav-cta" id="navCta">Enquire Now</a>
-  <button class="nav-ham" onclick="openMob()">
-    <span></span><span></span><span></span>
-  </button>
+  <a href="contact.html" class="nav-cta" id="navCta">Enquire Now</a>
+  <button class="nav-ham" onclick="openMob()"><span></span><span></span><span></span></button>
 </nav>
 
-<div id="siteContent"></div>
+<div id="pageContent"></div>
+
+<!-- WHATSAPP FLOAT -->
+<a class="whatsapp-float" id="waFloat" href="#" target="_blank" title="Chat on WhatsApp">
+  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
 
 <script>
-// ─── DATA LAYER ────────────────────────────────────────────────────────────────
-const NESTOX_KEY = 'nestox_site_data';
+// ── DATA LAYER ──────────────────────────────────────────────────────────────────
+const KEY='nestox_v4';
+const PAGES_KEY='nestox_pages_v4';
 
-const DEFAULT_DATA = {
-  brand:{ logoText:'Nestox', logoUrl:'', tagline:'Crafting Premium Spaces', favicon:'' },
-  hero:{
-    eyebrow:'Luxury Construction & Development',
-    title:'We Build', titleItalic:'Spaces That', titleEnd:'Inspire Life',
-    description:'Nestox Builders crafts premium residential and commercial spaces across the UAE and India — where architectural excellence meets timeless living.',
-    btnPrimary:'Explore Projects', btnGhost:'Our Story',
-    imageUrl:'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1200&q=80',
-    stats:[{num:'18+',label:'Years Building'},{num:'240+',label:'Projects Done'},{num:'98%',label:'Client Satisfaction'}],
-  },
-  about:{
-    eyebrow:'Who We Are', title:'Building Legacy', titleItalic:'One Stone at', titleEnd:'a Time',
-    body1:'Founded in 2006, Nestox Builders has earned its place as a benchmark of quality in premium construction. Every project is a testament to our commitment to precision, integrity, and inspired design.',
-    body2:'From luxury villas in Kerala to commercial landmarks in the Gulf, our work spans borders while staying true to a single principle: build what endures.',
-    imageUrl:'https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=900&q=80',
-    established:'2006',
-    pillars:[
-      {icon:'◈',title:'Precision Craft',desc:'Every joint, finish, and facade is executed with uncompromising attention to detail.'},
-      {icon:'◎',title:'Timely Delivery',desc:'We honour deadlines as commitments, not estimates — because your time matters.'},
-      {icon:'◇',title:'Transparent Pricing',desc:'Clear, honest costing with no hidden surprises at any stage of the project.'},
-      {icon:'◉',title:'Green Building',desc:'Sustainable practices woven into our process from foundation to finish.'},
-    ],
-  },
-  services:[
-    {num:'01',title:'Residential Construction',desc:'From intimate family homes to sprawling luxury villas — we translate your dream into architecture that breathes.'},
-    {num:'02',title:'Commercial Projects',desc:'Offices, retail spaces, and institutional buildings designed for impact, function, and lasting impressions.'},
-    {num:'03',title:'Interior Design',desc:'Bespoke interiors that blend aesthetics with livability — curated materials, spatial harmony, and soulful finishes.'},
-    {num:'04',title:'Renovation & Restoration',desc:'Breathing new life into existing structures with sensitivity to character and precision in execution.'},
-    {num:'05',title:'Turnkey Contracting',desc:'End-to-end project delivery — from architectural drawings to handing over the keys. One team, zero stress.'},
-    {num:'06',title:'MEP & Infrastructure',desc:'Mechanical, electrical, and plumbing systems engineered for efficiency, safety, and longevity.'},
-  ],
-  projects:[
-    {id:'p1',name:'Nestox The Grand Palms',tag:'Residential · Trivandrum',location:'Kowdiar, Kerala — 2023',type:'residential',imageUrl:'https://images.unsplash.com/photo-1613977257363-707ba9348227?w=1200&q=80',large:true},
-    {id:'p2',name:'Vertex Business Hub',tag:'Commercial · Dubai',location:'DIFC, Dubai — 2022',type:'commercial',imageUrl:'https://images.unsplash.com/photo-1486325212027-8081e485255e?w=800&q=80',large:false},
-    {id:'p3',name:'Aurum Penthouse',tag:'Interior · Kochi',location:'Marine Drive, Kochi — 2023',type:'interior',imageUrl:'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=800&q=80',large:false},
-    {id:'p4',name:'Serenity Villa',tag:'Residential · Abu Dhabi',location:'Al Raha Beach — 2024',type:'residential',imageUrl:'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&q=80',large:false},
-    {id:'p5',name:'The Chronicle Tower',tag:'Commercial · Riyadh',location:'King Abdullah Financial District — 2024',type:'commercial',imageUrl:'https://images.unsplash.com/photo-1497366216548-37526070297c?w=1200&q=80',large:true},
-  ],
-  testimonials:[
-    {initial:'R',name:'Rajesh Menon',role:'Villa Client · Trivandrum, 2023',text:'Working with Nestox was the single best decision we made. They transformed a barren plot into a home that exceeded every expectation — on time and within budget.'},
-    {initial:'F',name:'Faris Al Mansoori',role:'Commercial Client · Dubai, 2022',text:'The attention to detail was extraordinary. From the choice of marble to the placement of every light fixture — Nestox treated our office like it was their own.'},
-    {initial:'P',name:'Priya Chandran',role:'Interior Client · Kochi, 2023',text:'Our penthouse renovation was complex and required coordination across multiple vendors. Nestox managed everything flawlessly — a true turnkey experience.'},
-    {initial:'K',name:'Khalid Saeed',role:'Commercial Client · Riyadh, 2024',text:"I've worked with builders across the GCC. Nestox stands apart — the professionalism, transparency, and sheer quality of work is unmatched in the region."},
-  ],
-  contact:{
-    address:'TC 45/2196, Near Technopark,\nKazhakkoottam, Trivandrum — 695582',
-    phone1:'+91 98475 00000', phone2:'+971 4 000 0000 (UAE)',
-    email:'hello@nestoxbuilders.com', hours:'Mon – Sat: 9:00 AM – 6:00 PM',
-  },
-  footer:{
-    tagline:'Crafting premium spaces across India and the Gulf since 2006. Architecture that endures. Living that inspires.',
-    certifications:'RERA Registered · ISO 9001:2015 · CIDC Certified',
-    copyright:'© 2025 Nestox Builders Pvt. Ltd. All rights reserved.',
-    social:{linkedin:'#',instagram:'#',facebook:'#',youtube:'#'},
-  },
+const DEFAULT={
+  brand:{logoText:'Nestox',logoUrl:'',tagline:'Crafting Premium Spaces'},
+  nav:{links:[{label:'Home',href:'index.html'},{label:'About',href:'about.html'},{label:'Services',href:'services.html'},{label:'Projects',href:'projects.html'},{label:'Blog',href:'blog.html'},{label:'Contact',href:'contact.html'}],ctaLabel:'Enquire Now',ctaHref:'contact.html'},
+  hero:{eyebrow:'Luxury Construction & Development',title:'We Build',titleItalic:'Spaces That',titleEnd:'Inspire Life',desc:'Nestox Builders crafts premium residential and commercial spaces across the UAE and India — where architectural excellence meets timeless living.',btn1:'Explore Projects',btn1href:'projects.html',btn2:'Our Story',btn2href:'about.html',imageUrl:'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1200&q=80',stats:[{num:'18+',label:'Years Building'},{num:'240+',label:'Projects Done'},{num:'98%',label:'Client Satisfaction'}]},
+  about:{eyebrow:'Who We Are',title:'Building Legacy',titleItalic:'One Stone at',titleEnd:'a Time',body1:'Founded in 2006, Nestox Builders has earned its place as a benchmark of quality in premium construction.',body2:'From luxury villas in Kerala to commercial landmarks in the Gulf, our work spans borders while staying true to a single principle: build what endures.',imageUrl:'https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=900&q=80',established:'2006',fullBody:'Nestox Builders was founded with a singular vision — to redefine what premium construction means in South Asia and the Gulf. Over nearly two decades, we have delivered landmark residences, commercial developments, and interior transformations that have set new standards in design excellence and build quality.\n\nOur team of architects, engineers, and craftspeople bring together deep regional knowledge and international sensibilities to every project. We believe that a building is not just a structure — it is a legacy.\n\nHeadquartered in Trivandrum with offices in Dubai and Riyadh, we serve clients who demand the best — and we deliver it, every time.',pillars:[{icon:'◈',title:'Precision Craft',desc:'Every joint, finish, and facade executed with uncompromising attention.'},{icon:'◎',title:'Timely Delivery',desc:'We honour deadlines as commitments, not estimates.'},{icon:'◇',title:'Transparent Pricing',desc:'Clear, honest costing with no hidden surprises.'},{icon:'◉',title:'Green Building',desc:'Sustainable practices woven from foundation to finish.'}]},
+  services:[{num:'01',title:'Residential Construction',desc:'From intimate family homes to sprawling luxury villas.',fullDesc:'We design and build residences that reflect your personality and exceed your expectations. From single-family homes to gated villa communities, our residential division brings together the finest architects, engineers, and craftspeople.',imageUrl:'https://images.unsplash.com/photo-1613977257363-707ba9348227?w=800&q=80'},{num:'02',title:'Commercial Projects',desc:'Offices, retail, and institutional buildings for impact.',fullDesc:'Nestox delivers commercial projects that make a statement. Our commercial division handles everything from corporate headquarters to retail developments, with a focus on functionality, brand expression, and long-term value.',imageUrl:'https://images.unsplash.com/photo-1486325212027-8081e485255e?w=800&q=80'},{num:'03',title:'Interior Design',desc:'Bespoke interiors — curated materials and spatial harmony.',fullDesc:'Our interior design team creates spaces that are as beautiful as they are functional. We source the finest materials globally, work with master craftspeople locally, and manage every detail from concept to completion.',imageUrl:'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=800&q=80'},{num:'04',title:'Renovation & Restoration',desc:'Breathing new life into existing structures.',fullDesc:'We understand that existing structures have character and history. Our renovation team works sensitively with what exists, enhancing what works and transforming what doesn\'t — always delivering more than expected.',imageUrl:'https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=800&q=80'},{num:'05',title:'Turnkey Contracting',desc:'End-to-end delivery — drawings to handing over keys.',fullDesc:'For clients who want a truly hands-off experience, our turnkey service covers every aspect of the build — from initial design consultations and permits to construction, interior fit-out, landscaping, and final handover.',imageUrl:'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=800&q=80'},{num:'06',title:'MEP & Infrastructure',desc:'Mechanical, electrical, plumbing systems for longevity.',fullDesc:'The invisible systems within a building are as important as the visible ones. Our MEP division engineers and installs mechanical, electrical, and plumbing systems that are efficient, reliable, and built to last.',imageUrl:'https://images.unsplash.com/photo-1581094794329-c8112a89af12?w=800&q=80'}],
+  projects:[{id:'p1',name:'Nestox The Grand Palms',tag:'Residential · Trivandrum',location:'Kowdiar, Kerala — 2023',type:'residential',imageUrl:'https://images.unsplash.com/photo-1613977257363-707ba9348227?w=1200&q=80',large:true,desc:'A landmark residential development in the heart of Trivandrum, featuring 48 premium apartments with panoramic views, world-class amenities, and finishes sourced from across Europe.'},{id:'p2',name:'Vertex Business Hub',tag:'Commercial · Dubai',location:'DIFC, Dubai — 2022',type:'commercial',imageUrl:'https://images.unsplash.com/photo-1486325212027-8081e485255e?w=800&q=80',large:false,desc:'A 12-storey commercial tower in Dubai\'s financial district, housing over 60 businesses. Delivered 3 weeks ahead of schedule with LEED Gold certification.'},{id:'p3',name:'Aurum Penthouse',tag:'Interior · Kochi',location:'Marine Drive, Kochi — 2023',type:'interior',imageUrl:'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=800&q=80',large:false,desc:'A 4,200 sq ft penthouse transformation on Marine Drive, featuring custom Italian marble, hand-crafted joinery, and a bespoke lighting installation by a Dutch artist.'},{id:'p4',name:'Serenity Villa',tag:'Residential · Abu Dhabi',location:'Al Raha Beach — 2024',type:'residential',imageUrl:'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&q=80',large:false,desc:'A private waterfront villa on Al Raha Beach, designed around indoor-outdoor living with a 25-metre lap pool, private jetty, and smart home integration throughout.'},{id:'p5',name:'The Chronicle Tower',tag:'Commercial · Riyadh',location:'KAFD, Riyadh — 2024',type:'commercial',imageUrl:'https://images.unsplash.com/photo-1497366216548-37526070297c?w=1200&q=80',large:true,desc:'A signature mixed-use tower within the King Abdullah Financial District, comprising Grade A offices, a boutique hotel, and curated retail on the lower podium levels.'}],
+  testimonials:[{initial:'R',name:'Rajesh Menon',role:'Villa Client · Trivandrum, 2023',text:'Working with Nestox was the single best decision we made. They transformed a barren plot into a home that exceeded every expectation — on time and within budget.'},{initial:'F',name:'Faris Al Mansoori',role:'Commercial Client · Dubai, 2022',text:'The attention to detail was extraordinary. From the choice of marble to the placement of every light fixture — Nestox treated our office like it was their own.'},{initial:'P',name:'Priya Chandran',role:'Interior Client · Kochi, 2023',text:'Our penthouse renovation was complex. Nestox managed everything flawlessly — a true turnkey experience.'},{initial:'K',name:'Khalid Saeed',role:'Commercial Client · Riyadh, 2024',text:"I've worked with builders across the GCC. Nestox stands apart — professionalism and quality unmatched in the region."}],
+  contact:{address:'TC 45/2196, Near Technopark,\nKazhakkoottam, Trivandrum — 695582',phone1:'+91 98475 00000',phone2:'+971 4 000 0000 (UAE)',phone3:'+966 11 000 0000 (KSA)',email:'hello@nestoxbuilders.com',hours:'Mon – Sat: 9:00 AM – 6:00 PM',whatsapp:'+919847500000',mapEmbed:'',officeKerala:'Trivandrum, Kerala',officeDubai:'Dubai, UAE',officeRiyadh:'Riyadh, KSA'},
+  footer:{tagline:'Crafting premium spaces across India and the Gulf since 2006. Architecture that endures. Living that inspires.',certifications:'RERA Registered · ISO 9001:2015 · CIDC Certified',copyright:'© 2025 Nestox Builders Pvt. Ltd. All rights reserved.',social:{linkedin:'#',instagram:'#',facebook:'#',youtube:'#'}},
   blogs:[],
-  pages:[],
-  nav:{
-    links:[
-      {label:'About',href:'#about'},{label:'Services',href:'#services'},
-      {label:'Projects',href:'#projects'},{label:'Process',href:'#process'},
-      {label:'Blog',href:'#blog'},
-    ],
-    ctaLabel:'Enquire Now', ctaHref:'#contact',
-  },
-  process:[
-    {num:'01',title:'Discovery',desc:'We meet, listen, and understand your vision, timeline, and investment capacity in full.'},
-    {num:'02',title:'Design',desc:'Architects and designers translate your brief into a detailed design proposal for your review.'},
-    {num:'03',title:'Construction',desc:'Our expert crew breaks ground with the finest materials, overseen by dedicated project managers.'},
-    {num:'04',title:'Handover',desc:'Walk into your completed space — quality-checked, documented, and ready to be called home.'},
-  ],
+  process:[{num:'01',title:'Discovery',desc:'We meet, listen, and understand your vision, timeline, and investment capacity.'},{num:'02',title:'Design',desc:'Architects translate your brief into a detailed design proposal.'},{num:'03',title:'Construction',desc:'Our expert crew breaks ground with finest materials and dedicated oversight.'},{num:'04',title:'Handover',desc:'Walk into your completed space — quality-checked and ready to be called home.'}],
   marqueeItems:['Residential Villas','Luxury Apartments','Commercial Spaces','Interior Design','Turnkey Projects','Urban Developments'],
   settings:{showAbout:true,showServices:true,showProjects:true,showProcess:true,showTestimonials:true,showBlog:true,showContact:true},
 };
 
-function getNestoxData(){
-  try{
-    const raw=localStorage.getItem(NESTOX_KEY);
-    if(!raw) return JSON.parse(JSON.stringify(DEFAULT_DATA));
-    const saved=JSON.parse(raw);
-    return deepMerge(JSON.parse(JSON.stringify(DEFAULT_DATA)),saved);
-  }catch(e){ return JSON.parse(JSON.stringify(DEFAULT_DATA)); }
-}
-function deepMerge(t,s){
-  if(Array.isArray(s)) return s;
-  for(const k in s){
-    if(s[k]&&typeof s[k]==='object'&&!Array.isArray(s[k])){
-      if(!t[k]) t[k]={};
-      deepMerge(t[k],s[k]);
-    } else { t[k]=s[k]; }
-  }
-  return t;
-}
+function getD(){try{const r=localStorage.getItem(KEY);return r?deepMerge(JSON.parse(JSON.stringify(DEFAULT)),JSON.parse(r)):JSON.parse(JSON.stringify(DEFAULT));}catch(e){return JSON.parse(JSON.stringify(DEFAULT));}}
+function deepMerge(t,s){if(Array.isArray(s))return s;for(const k in s){if(s[k]&&typeof s[k]==='object'&&!Array.isArray(s[k])){if(!t[k])t[k]={};deepMerge(t[k],s[k]);}else t[k]=s[k];}return t;}
 
-// ─── RENDER ENGINE ─────────────────────────────────────────────────────────────
-let D;
-function boot(){
-  D=getNestoxData();
-  renderNav();
-  renderSite();
-  initCursor();
-  initScrollReveal();
-  initNavScroll();
-}
+let D=getD();
+const currentPage=window.location.pathname.split('/').pop()||'index.html';
 
+// ── NAV ─────────────────────────────────────────────────────────────────────────
 function renderNav(){
   const logo=document.getElementById('navLogo');
-  if(D.brand.logoUrl){ logo.innerHTML=`<img src="${D.brand.logoUrl}" alt="${D.brand.logoText}">`; }
-  else { logo.innerHTML=D.brand.logoText+'<span>.</span>'; }
-  const ul=document.getElementById('navLinks');
-  ul.innerHTML=D.nav.links.map(l=>{
-    if(l.href==='#blog'&&(!D.settings.showBlog||D.blogs.length===0)) return '';
-    return `<li><a href="${l.href}" onclick="closeMob()">${l.label}</a></li>`;
-  }).join('');
+  if(D.brand.logoUrl){logo.innerHTML=`<img src="${D.brand.logoUrl}" alt="${D.brand.logoText}">`;}
+  else{logo.innerHTML=D.brand.logoText+'<span>.</span>';}
   const cta=document.getElementById('navCta');
-  cta.textContent=D.nav.ctaLabel; cta.href=D.nav.ctaHref;
-  document.getElementById('mobLinks').innerHTML=D.nav.links.map(l=>{
-    if(l.href==='#blog'&&(!D.settings.showBlog||D.blogs.length===0)) return '';
-    return `<a href="${l.href}" onclick="closeMob()">${l.label}</a>`;
-  }).join('');
+  cta.textContent=D.nav.ctaLabel;cta.href=D.nav.ctaHref;
+  document.getElementById('navLinks').innerHTML=D.nav.links.filter(l=>!(l.href==='blog.html'&&D.blogs.length===0)).map(l=>`<li><a href="${l.href}" class="${l.href===currentPage?'active':''}">${l.label}</a></li>`).join('');
+  document.getElementById('mobLinks').innerHTML=D.nav.links.filter(l=>!(l.href==='blog.html'&&D.blogs.length===0)).map(l=>`<a href="${l.href}" onclick="closeMob()">${l.label}</a>`).join('');
   document.title=D.brand.logoText+' Builders — '+D.brand.tagline;
+  const wa=document.getElementById('waFloat');
+  if(wa)wa.href=`https://wa.me/${D.contact.whatsapp.replace(/\D/g,'')}`;
 }
 
-function renderSite(){
-  const s=D.settings; let h='';
-  h+=renderHero();
-  h+=renderMarquee();
-  if(s.showAbout) h+=renderAbout();
-  if(s.showServices) h+=renderServices();
-  if(s.showProjects) h+=renderProjects();
-  if(s.showProcess) h+=renderProcess();
-  if(s.showTestimonials) h+=renderTestimonials();
-  if(s.showBlog&&D.blogs.length>0) h+=renderBlog();
-  if(s.showContact) h+=renderContact();
-  h+=renderFooter();
-  h+=renderCustomPages();
-  document.getElementById('siteContent').innerHTML=h;
-}
-
-function renderHero(){
-  const h=D.hero;
-  const stats=h.stats.map(s=>`<div class="stat-item"><div class="stat-num">${s.num}</div><div class="stat-label">${s.label}</div></div>`).join('');
-  return `<section class="hero" id="home">
+// ── HOME PAGE ────────────────────────────────────────────────────────────────────
+function renderHome(){
+  const h=D.hero;const s=D.settings;
+  let html='';
+  html+=`<section class="hero">
     <div class="hero-left">
       <p class="hero-eyebrow">${h.eyebrow}</p>
       <h1 class="hero-title">${h.title}<br><em>${h.titleItalic}</em><br>${h.titleEnd}</h1>
-      <p class="hero-desc">${h.description}</p>
+      <p class="hero-desc">${h.desc}</p>
       <div class="hero-actions">
-        <a href="#projects" class="btn-primary">${h.btnPrimary}</a>
-        <a href="#about" class="btn-ghost">${h.btnGhost}</a>
+        <a href="${h.btn1href}" class="btn-primary">${h.btn1}</a>
+        <a href="${h.btn2href}" class="btn-ghost">${h.btn2}</a>
       </div>
-      <div class="hero-stats">${stats}</div>
+      <div class="hero-stats">${h.stats.map(st=>`<div><div class="stat-num">${st.num}</div><div class="stat-label">${st.label}</div></div>`).join('')}</div>
     </div>
     <div class="hero-right">
       <div class="hero-img-wrap">
@@ -462,6 +355,18 @@ function renderHero(){
       </div>
     </div>
   </section>`;
+  html+=renderMarquee();
+  if(s.showAbout)html+=renderAboutPreview();
+  if(s.showServices)html+=renderServicesPreview();
+  if(s.showProjects)html+=renderProjectsPreview();
+  if(s.showProcess)html+=renderProcess();
+  if(s.showTestimonials)html+=renderTestimonials();
+  if(s.showBlog&&D.blogs.length>0)html+=renderBlogPreview();
+  html+=renderContact();
+  html+=renderFooter();
+  document.getElementById('pageContent').innerHTML=html;
+  initScrollReveal();
+  initParallax();
 }
 
 function renderMarquee(){
@@ -469,60 +374,56 @@ function renderMarquee(){
   return `<div class="marquee-wrap"><div class="marquee-track">${items}</div></div>`;
 }
 
-function renderAbout(){
+function renderAboutPreview(){
   const a=D.about;
   const pillars=a.pillars.map(p=>`<div class="pillar"><div class="pillar-icon">${p.icon}</div><div class="pillar-title">${p.title}</div><div class="pillar-desc">${p.desc}</div></div>`).join('');
-  return `<section class="about" id="about">
+  return `<section class="about-prev">
     <div class="about-media">
-      <div class="about-img" style="background-image:url('${a.imageUrl}')"></div>
+      <div class="about-img reveal" style="background-image:url('${a.imageUrl}')"></div>
       <div class="about-badge reveal"><div class="about-badge-num">${a.established}</div><div class="about-badge-text">Established</div></div>
     </div>
     <div class="about-content">
-      <p class="section-eyebrow reveal">${a.eyebrow}</p>
-      <h2 class="section-title reveal reveal-delay-1">${a.title}<br><em>${a.titleItalic}</em><br>${a.titleEnd}</h2>
-      <p class="section-body reveal reveal-delay-2">${a.body1}</p>
-      <p class="section-body reveal reveal-delay-2">${a.body2}</p>
-      <div class="about-pillars reveal reveal-delay-3">${pillars}</div>
+      <p class="sec-eyebrow reveal">${a.eyebrow}</p>
+      <h2 class="sec-title reveal reveal-delay-1">${a.title}<br><em>${a.titleItalic}</em><br>${a.titleEnd}</h2>
+      <p class="sec-body reveal reveal-delay-2">${a.body1}</p>
+      <p class="sec-body reveal reveal-delay-2">${a.body2}</p>
+      <a href="about.html" class="btn-primary reveal reveal-delay-3" style="margin-top:16px;display:inline-block;">Read Our Story →</a>
+      <div class="pillars reveal reveal-delay-3">${pillars}</div>
     </div>
   </section>`;
 }
 
-function renderServices(){
-  const cards=D.services.map((s,i)=>`<div class="service-card reveal${i>0?' reveal-delay-'+Math.min(i,4):''}">
-    <div class="service-num">${s.num}</div>
-    <div class="service-title">${s.title}</div>
-    <p class="service-desc">${s.desc}</p>
-    <span class="service-arrow">→</span>
-  </div>`).join('');
-  return `<section class="services" id="services">
-    <div class="services-header">
-      <div><p class="section-eyebrow reveal">What We Do</p><h2 class="section-title reveal reveal-delay-1">Our Core<br><em>Services</em></h2></div>
-      <a href="#contact" class="btn-primary reveal">Get a Quote →</a>
+function renderServicesPreview(){
+  const cards=D.services.map((s,i)=>`<a href="services.html" class="svc-card reveal${i>0?' reveal-delay-'+Math.min(i,4):''}">
+    <div class="svc-num">${s.num}</div>
+    <div class="svc-title">${s.title}</div>
+    <p class="svc-desc">${s.desc}</p>
+    <span class="svc-arrow">→</span>
+  </a>`).join('');
+  return `<section class="services-sec">
+    <div class="svc-header">
+      <div><p class="sec-eyebrow reveal">What We Do</p><h2 class="sec-title reveal reveal-delay-1">Our Core<br><em>Services</em></h2></div>
+      <a href="services.html" class="btn-primary reveal">View All Services →</a>
     </div>
-    <div class="services-grid">${cards}</div>
+    <div class="svc-grid">${cards}</div>
   </section>`;
 }
 
-function renderProjects(){
-  const cards=D.projects.map(p=>`<div class="project-card${p.large?' large':''}" data-type="${p.type}">
-    <div class="project-bg" style="background-image:url('${p.imageUrl}')"></div>
-    <div class="project-overlay">
-      <div class="project-tag">${p.tag}</div>
-      <div class="project-name">${p.name}</div>
-      <div class="project-location">${p.location}</div>
+function renderProjectsPreview(){
+  const cards=D.projects.slice(0,5).map(p=>`<a href="projects.html" class="proj-card${p.large?' large':''}">
+    <div class="proj-bg" style="background-image:url('${p.imageUrl}')"></div>
+    <div class="proj-overlay">
+      <div class="proj-tag">${p.tag}</div>
+      <div class="proj-name">${p.name}</div>
+      <div class="proj-loc">${p.location}</div>
     </div>
-  </div>`).join('');
-  return `<section class="projects" id="projects">
-    <div class="projects-header">
-      <div><p class="section-eyebrow reveal">Our Work</p><h2 class="section-title reveal reveal-delay-1">Featured<br><em>Projects</em></h2></div>
-      <div class="projects-tabs reveal">
-        <button class="tab-btn active" onclick="filterProj('all',this)">All</button>
-        <button class="tab-btn" onclick="filterProj('residential',this)">Residential</button>
-        <button class="tab-btn" onclick="filterProj('commercial',this)">Commercial</button>
-        <button class="tab-btn" onclick="filterProj('interior',this)">Interior</button>
-      </div>
+  </a>`).join('');
+  return `<section class="projects-sec">
+    <div class="proj-header">
+      <div><p class="sec-eyebrow reveal">Our Work</p><h2 class="sec-title reveal reveal-delay-1">Featured<br><em>Projects</em></h2></div>
+      <a href="projects.html" class="btn-primary reveal">View All Projects →</a>
     </div>
-    <div class="projects-grid" id="projectsGrid">${cards}</div>
+    <div class="proj-grid">${cards}</div>
   </section>`;
 }
 
@@ -532,18 +433,17 @@ function renderProcess(){
     <h3 class="step-title">${s.title}</h3>
     <p class="step-desc">${s.desc}</p>
   </div>`).join('');
-  return `<section class="process" id="process">
+  return `<section class="process-sec">
     <div class="process-header">
-      <p class="section-eyebrow reveal">How We Work</p>
-      <h2 class="section-title reveal reveal-delay-1">Our Build <em>Process</em></h2>
-      <p class="section-body reveal reveal-delay-2" style="margin-top:14px;">A structured, transparent journey from first conversation to final handover.</p>
+      <p class="sec-eyebrow reveal">How We Work</p>
+      <h2 class="sec-title reveal reveal-delay-1">Our Build <em>Process</em></h2>
     </div>
     <div class="process-steps">${steps}</div>
   </section>`;
 }
 
 function renderTestimonials(){
-  const cards=D.testimonials.map((t,i)=>`<div class="testimonial-card reveal${i>0?' reveal-delay-'+Math.min(i,4):''}">
+  const cards=D.testimonials.map((t,i)=>`<div class="testi-card reveal${i>0?' reveal-delay-'+Math.min(i,4):''}">
     <div class="testi-quote">"</div>
     <div class="stars">★★★★★</div>
     <p class="testi-text">${t.text}</p>
@@ -552,125 +452,123 @@ function renderTestimonials(){
       <div><div class="author-name">${t.name}</div><div class="author-role">${t.role}</div></div>
     </div>
   </div>`).join('');
-  return `<section class="testimonials" id="testimonials">
+  return `<section class="testi-sec">
     <div class="testi-inner">
       <div class="testi-hdr">
-        <div><p class="section-eyebrow reveal">Client Stories</p><h2 class="section-title reveal reveal-delay-1">What Our Clients<br><em>Say About Us</em></h2></div>
-        <div class="reveal" style="font-size:.8rem;letter-spacing:.1em;color:var(--muted);">${D.testimonials.length*60}+ Happy Families</div>
+        <div><p class="sec-eyebrow reveal">Client Stories</p><h2 class="sec-title reveal reveal-delay-1">What Our Clients<br><em>Say About Us</em></h2></div>
       </div>
-      <div class="testimonials-grid">${cards}</div>
+      <div class="testi-grid">${cards}</div>
     </div>
   </section>`;
 }
 
-function renderBlog(){
+function renderBlogPreview(){
   const cards=D.blogs.slice(0,3).map((b,i)=>`<div class="blog-card reveal${i>0?' reveal-delay-'+i:''}">
     <div class="blog-img" style="background-image:url('${b.imageUrl||''}')"></div>
     <div class="blog-body">
       <div class="blog-tag">${b.category||'Insights'}</div>
       <h3 class="blog-title">${b.title}</h3>
-      <p class="blog-excerpt">${b.excerpt||(b.content||'').substring(0,120)}...</p>
-      <div class="blog-meta"><span>${b.author||'Nestox Team'}</span><span>${b.date||''}</span></div>
-      <button class="blog-read-more" onclick="openBlogModal('${b.id}')">Read More →</button>
+      <p class="blog-excerpt">${b.excerpt||(b.content||'').substring(0,110)}...</p>
+      <div class="blog-meta">${b.author||'Nestox Team'} · ${b.date||''}</div>
+      <button class="blog-rm" onclick="openBM('${b.id}')">Read More →</button>
     </div>
   </div>`).join('');
-  return `<section class="blog" id="blog">
+  return `<section class="blog-sec">
     <div class="blog-header">
-      <div><p class="section-eyebrow reveal">Latest Insights</p><h2 class="section-title reveal reveal-delay-1">From Our<br><em>Blog</em></h2></div>
-      <a href="#" class="btn-primary reveal" onclick="showAllBlogs(event)">All Posts →</a>
+      <div><p class="sec-eyebrow reveal">Latest Insights</p><h2 class="sec-title reveal reveal-delay-1">From Our <em>Blog</em></h2></div>
+      <a href="blog.html" class="btn-primary reveal">All Posts →</a>
     </div>
-    <div class="blog-grid" id="blogGrid">${cards}</div>
+    <div class="blog-grid">${cards}</div>
   </section>`;
 }
 
 function renderContact(){
   const c=D.contact;
-  const svcOpts=D.services.map(s=>`<option>${s.title}</option>`).join('');
-  return `<section class="contact" id="contact">
-    <div class="contact-left">
-      <p class="section-eyebrow reveal">Get In Touch</p>
-      <h2 class="section-title reveal reveal-delay-1">Let's Build<br><em>Something</em><br>Together</h2>
-      <p class="section-body reveal reveal-delay-2">Whether you have a plot, a vision, or just a feeling — we'd love to hear it.</p>
-      <div class="contact-info reveal reveal-delay-3">
-        <div class="contact-item"><div class="contact-icon">📍</div><div><div class="contact-item-label">Office</div><div class="contact-item-text">${c.address}</div></div></div>
-        <div class="contact-item"><div class="contact-icon">📞</div><div><div class="contact-item-label">Phone</div><div class="contact-item-text">${c.phone1}<br>${c.phone2}</div></div></div>
-        <div class="contact-item"><div class="contact-icon">✉</div><div><div class="contact-item-label">Email</div><div class="contact-item-text">${c.email}</div></div></div>
-        <div class="contact-item"><div class="contact-icon">🕐</div><div><div class="contact-item-label">Hours</div><div class="contact-item-text">${c.hours}</div></div></div>
+  const mapContent=c.mapEmbed
+    ?`<iframe src="${c.mapEmbed}" allowfullscreen loading="lazy"></iframe>`
+    :`<div class="contact-map-placeholder"><span class="map-icon">📍</span><p>${c.officeKerala} · ${c.officeDubai} · ${c.officeRiyadh}</p></div>`;
+  return `<section class="contact-sec">
+    <div class="contact-top">
+      <div class="contact-info-col">
+        <p class="sec-eyebrow">Reach Us</p>
+        <h2 class="sec-title">Let's Start a<br><em>Conversation</em></h2>
+        <div class="c-detail">
+          <div class="c-item"><div class="c-icon">📞</div><div><div class="c-label">Phone</div><div class="c-value"><a href="tel:${c.phone1}">${c.phone1}</a><br><a href="tel:${c.phone2}">${c.phone2}</a><br><a href="tel:${c.phone3}">${c.phone3}</a></div></div></div>
+          <div class="c-item"><div class="c-icon">✉</div><div><div class="c-label">Email</div><div class="c-value"><a href="mailto:${c.email}">${c.email}</a></div></div></div>
+          <div class="c-item"><div class="c-icon">💬</div><div><div class="c-label">WhatsApp</div><div class="c-value"><a href="https://wa.me/${c.whatsapp.replace(/\D/g,'')}" target="_blank">${c.whatsapp}</a></div></div></div>
+        </div>
+      </div>
+      <div class="contact-info-col">
+        <p class="sec-eyebrow">Our Offices</p>
+        <h2 class="sec-title">Where to<br><em>Find Us</em></h2>
+        <div class="c-detail">
+          <div class="c-item"><div class="c-icon">🇮🇳</div><div><div class="c-label">India — Head Office</div><div class="c-value">${c.address}</div></div></div>
+          <div class="c-item"><div class="c-icon">🇦🇪</div><div><div class="c-label">UAE Office</div><div class="c-value">${c.officeDubai}</div></div></div>
+          <div class="c-item"><div class="c-icon">🇸🇦</div><div><div class="c-label">KSA Office</div><div class="c-value">${c.officeRiyadh}</div></div></div>
+          <div class="c-item"><div class="c-icon">🕐</div><div><div class="c-label">Working Hours</div><div class="c-value">${c.hours}<br>Sunday: Closed</div></div></div>
+        </div>
+      </div>
+      <div class="contact-info-col">
+        <p class="sec-eyebrow">Connect</p>
+        <h2 class="sec-title">Follow Our<br><em>Journey</em></h2>
+        <div class="c-detail" style="margin-top:36px;">
+          ${D.footer.social.linkedin!=='#'?`<div class="c-item"><div class="c-icon">in</div><div><div class="c-label">LinkedIn</div><div class="c-value"><a href="${D.footer.social.linkedin}" target="_blank">Nestox Builders</a></div></div></div>`:''}
+          ${D.footer.social.instagram!=='#'?`<div class="c-item"><div class="c-icon">IG</div><div><div class="c-label">Instagram</div><div class="c-value"><a href="${D.footer.social.instagram}" target="_blank">@nestoxbuilders</a></div></div></div>`:''}
+          ${D.footer.social.facebook!=='#'?`<div class="c-item"><div class="c-icon">fb</div><div><div class="c-label">Facebook</div><div class="c-value"><a href="${D.footer.social.facebook}" target="_blank">Nestox Builders</a></div></div></div>`:''}
+          ${D.footer.social.youtube!=='#'?`<div class="c-item"><div class="c-icon">YT</div><div><div class="c-label">YouTube</div><div class="c-value"><a href="${D.footer.social.youtube}" target="_blank">Nestox Builders</a></div></div></div>`:''}
+          <div class="c-item" style="margin-top:8px;"><div><div class="c-label" style="margin-bottom:14px;">Send us a message</div>
+            <a href="https://wa.me/${c.whatsapp.replace(/\D/g,'')}" target="_blank" style="display:inline-flex;align-items:center;gap:10px;background:#25d366;color:#fff;padding:12px 24px;text-decoration:none;font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;transition:opacity .3s;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+              Chat on WhatsApp
+            </a>
+          </div></div>
+        </div>
       </div>
     </div>
-    <div class="contact-right">
-      <p class="section-eyebrow reveal">Enquiry Form</p>
-      <h3 class="section-title reveal reveal-delay-1" style="font-size:2rem;margin-bottom:0;">Tell Us About<br><em>Your Project</em></h3>
-      <form class="contact-form reveal reveal-delay-2" onsubmit="handleForm(event)">
-        <div class="form-row">
-          <div class="form-group"><label class="form-label">Full Name</label><input type="text" class="form-input" placeholder="Your name" required></div>
-          <div class="form-group"><label class="form-label">Phone</label><input type="tel" class="form-input" placeholder="+91 or +971"></div>
-        </div>
-        <div class="form-group"><label class="form-label">Email</label><input type="email" class="form-input" placeholder="your@email.com" required></div>
-        <div class="form-row">
-          <div class="form-group"><label class="form-label">Service</label><select class="form-select">${svcOpts}</select></div>
-          <div class="form-group"><label class="form-label">Location</label><select class="form-select"><option>Kerala, India</option><option>Dubai, UAE</option><option>Abu Dhabi, UAE</option><option>Saudi Arabia</option><option>Other</option></select></div>
-        </div>
-        <div class="form-group"><label class="form-label">Project Details</label><textarea class="form-textarea" placeholder="Tell us about your project, timeline, and budget..."></textarea></div>
-        <button type="submit" class="form-submit" id="formBtn">Send Enquiry →</button>
-      </form>
+    <div class="contact-map">${mapContent}</div>
+    <div class="contact-cta-strip">
+      <div class="cta-strip-text">Ready to build your <em>dream space?</em></div>
+      <div class="cta-strip-btns">
+        <a href="https://wa.me/${c.whatsapp.replace(/\D/g,'')}" target="_blank" class="cta-btn-white">WhatsApp Us</a>
+        <a href="mailto:${c.email}" class="cta-btn-outline">Send Email</a>
+      </div>
     </div>
   </section>`;
 }
 
 function renderFooter(){
-  const f=D.footer; const b=D.brand;
-  const logoHtml=b.logoUrl?`<a href="#" class="footer-logo"><img src="${b.logoUrl}" alt="${b.logoText}"></a>`:`<a href="#" class="footer-logo">${b.logoText}<span>.</span></a>`;
+  const f=D.footer;const b=D.brand;
+  const logoHtml=b.logoUrl?`<a href="index.html" class="footer-logo"><img src="${b.logoUrl}" alt="${b.logoText}"></a>`:`<a href="index.html" class="footer-logo">${b.logoText}<span>.</span></a>`;
   const navLinks=D.nav.links.map(l=>`<li><a href="${l.href}">${l.label}</a></li>`).join('');
-  const svcLinks=D.services.slice(0,5).map(s=>`<li><a href="#services">${s.title}</a></li>`).join('');
-  const pageLinks=D.pages.map(p=>`<li><a href="#page-${p.id}">${p.title}</a></li>`).join('');
+  const svcLinks=D.services.slice(0,5).map(s=>`<li><a href="services.html">${s.title}</a></li>`).join('');
   return `<footer>
     <div class="footer-top">
-      <div>
-        ${logoHtml}
-        <p class="footer-tagline">${f.tagline}</p>
+      <div>${logoHtml}<p class="footer-tagline">${f.tagline}</p>
         <div class="footer-socials">
-          <a href="${f.social.linkedin}" class="social-btn">in</a>
-          <a href="${f.social.instagram}" class="social-btn">IG</a>
-          <a href="${f.social.facebook}" class="social-btn">fb</a>
-          <a href="${f.social.youtube}" class="social-btn">YT</a>
+          <a href="${f.social.linkedin}" class="social-btn" target="_blank">in</a>
+          <a href="${f.social.instagram}" class="social-btn" target="_blank">IG</a>
+          <a href="${f.social.facebook}" class="social-btn" target="_blank">fb</a>
+          <a href="${f.social.youtube}" class="social-btn" target="_blank">YT</a>
         </div>
       </div>
-      <div><div class="footer-col-title">Company</div><ul class="footer-links">${navLinks}</ul></div>
+      <div><div class="footer-col-title">Navigation</div><ul class="footer-links">${navLinks}</ul></div>
       <div><div class="footer-col-title">Services</div><ul class="footer-links">${svcLinks}</ul></div>
       <div><div class="footer-col-title">Contact</div><ul class="footer-links">
         <li><a href="tel:${D.contact.phone1}">${D.contact.phone1}</a></li>
         <li><a href="mailto:${D.contact.email}">${D.contact.email}</a></li>
-        ${pageLinks}
+        <li><a href="contact.html">Visit Our Offices</a></li>
       </ul></div>
     </div>
-    <div class="footer-bottom">
-      <p class="footer-copy">${f.copyright}</p>
-      <p class="footer-reg">${f.certifications}</p>
-    </div>
+    <div class="footer-bottom"><p class="footer-copy">${f.copyright}</p><p class="footer-reg">${f.certifications}</p></div>
   </footer>`;
 }
 
-function renderCustomPages(){
-  return D.pages.map(p=>`<section class="custom-page" id="page-${p.id}">
-    <p class="custom-page-eyebrow">${p.eyebrow||'Page'}</p>
-    <h2 class="custom-page-title">${p.title}</h2>
-    <div class="custom-page-content">${p.content}</div>
-  </section>`).join('');
-}
-
-// ─── INTERACTIONS ──────────────────────────────────────────────────────────────
-function filterProj(type,btn){
-  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');
-  document.querySelectorAll('.project-card').forEach(c=>{
-    c.style.display=(type==='all'||c.dataset.type===type)?'':'none';
-  });
-}
-function openBlogModal(id){
-  const b=D.blogs.find(x=>x.id===id); if(!b) return;
+// ── BLOG MODAL ───────────────────────────────────────────────────────────────────
+function openBM(id){
+  const b=D.blogs.find(x=>x.id===id);if(!b)return;
   const img=document.getElementById('bmImg');
-  if(b.imageUrl){img.style.backgroundImage=`url('${b.imageUrl}')`;img.style.display='block';}else{img.style.display='none';}
+  img.style.display=b.imageUrl?'block':'none';
+  if(b.imageUrl)img.style.backgroundImage=`url('${b.imageUrl}')`;
   document.getElementById('bmTag').textContent=b.category||'Insights';
   document.getElementById('bmTitle').textContent=b.title;
   document.getElementById('bmMeta').textContent=(b.author||'Nestox Team')+' · '+(b.date||'');
@@ -678,65 +576,40 @@ function openBlogModal(id){
   document.getElementById('blogModal').classList.add('open');
   document.body.style.overflow='hidden';
 }
-function closeBlogModal(){
-  document.getElementById('blogModal').classList.remove('open');
-  document.body.style.overflow='';
-}
-function showAllBlogs(e){
-  e.preventDefault();
-  const grid=document.getElementById('blogGrid'); if(!grid) return;
-  grid.innerHTML=D.blogs.map((b,i)=>`<div class="blog-card">
-    <div class="blog-img" style="background-image:url('${b.imageUrl||''}')"></div>
-    <div class="blog-body">
-      <div class="blog-tag">${b.category||'Insights'}</div>
-      <h3 class="blog-title">${b.title}</h3>
-      <p class="blog-excerpt">${b.excerpt||(b.content||'').substring(0,120)}...</p>
-      <div class="blog-meta"><span>${b.author||'Nestox Team'}</span><span>${b.date||''}</span></div>
-      <button class="blog-read-more" onclick="openBlogModal('${b.id}')">Read More →</button>
-    </div>
-  </div>`).join('');
-}
-function handleForm(e){
-  e.preventDefault();
-  const btn=document.getElementById('formBtn');
-  btn.textContent='Sending...';
-  setTimeout(()=>{
-    btn.textContent='✓ Enquiry Sent!';btn.style.background='#2e6b4a';
-    setTimeout(()=>{btn.textContent='Send Enquiry →';btn.style.background='';e.target.reset();},3000);
-  },1200);
-}
-function openMob(){document.getElementById('mobMenu').classList.add('open');}
-function closeMob(){document.getElementById('mobMenu').classList.remove('open');}
+function closeBM(){document.getElementById('blogModal').classList.remove('open');document.body.style.overflow='';}
 
-// ─── CURSOR ────────────────────────────────────────────────────────────────────
+// ── CURSOR ───────────────────────────────────────────────────────────────────────
 function initCursor(){
   const c=document.getElementById('cursor'),r=document.getElementById('cursorRing');
   let mx=0,my=0,rx=0,ry=0;
-  document.addEventListener('mousemove',e=>{
-    mx=e.clientX;my=e.clientY;
-    c.style.transform=`translate(${mx-4}px,${my-4}px)`;
-  });
+  document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;c.style.transform=`translate(${mx-4}px,${my-4}px)`;});
   (function loop(){rx+=(mx-rx)*.12;ry+=(my-ry)*.12;r.style.transform=`translate(${rx-18}px,${ry-18}px)`;requestAnimationFrame(loop);})();
   document.addEventListener('mouseover',e=>{
-    if(e.target.closest('a,button,.service-card,.project-card,.blog-card,.testimonial-card')){r.style.width='58px';r.style.height='58px';}
+    if(e.target.closest('a,button,.svc-card,.proj-card,.blog-card,.testi-card')){r.style.width='58px';r.style.height='58px';}
     else{r.style.width='36px';r.style.height='36px';}
   });
 }
 
-// ─── SCROLL ────────────────────────────────────────────────────────────────────
 function initScrollReveal(){
   const obs=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');}),{threshold:.1});
   document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
 }
-function initNavScroll(){
+function initParallax(){
   window.addEventListener('scroll',()=>{
     document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>60);
     const bg=document.getElementById('heroBg');
-    if(bg) bg.style.transform=`scale(1.04) translateY(${window.scrollY*.13}px)`;
+    if(bg)bg.style.transform=`scale(1.04) translateY(${window.scrollY*.12}px)`;
   });
 }
+function openMob(){document.getElementById('mobMenu').classList.add('open');}
+function closeMob(){document.getElementById('mobMenu').classList.remove('open');}
+window.addEventListener('scroll',()=>{document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>60);});
 
-window.addEventListener('DOMContentLoaded',boot);
+window.addEventListener('DOMContentLoaded',()=>{
+  renderNav();
+  renderHome();
+  initCursor();
+});
 </script>
 </body>
 </html>
